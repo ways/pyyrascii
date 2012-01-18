@@ -20,6 +20,10 @@ import pyyrlib
 
 def get_pyyrascii (location):
   weatherdata = pyyrlib.returnWeatherData(location, True)
+
+  if not weatherdata:
+    return "Error; no weather data for selected location."
+
   #print weatherdata
   #weatherdata = {'tabular': [{'from': u'2012-01-17T21:00:00', 'temperature': u'-3', 'pressure': u'1022.6', 'precipitation': u'0', 'period': None, 'to': u'2012-01-17T22:00:00', 'windSpeed': {'mps': u'1.3', 'name': u'Flau vind'}, 'symbolnumber': u'4', 'windDirection': {'code': u'SSE', 'degrees': None, 'name': u'S\xf8r-s\xf8r\xf8st'}, 'symbolname': u'Skyet'}, {'from': u'2012-01-17T22:00:00', 'temperature': u'-2', 'pressure': u'1022.6', 'precipitation': u'0', 'period': None, 'to': u'2012-01-17T23:00:00', 'windSpeed': {'mps': u'0.5', 'name': u'Flau vind'}, 'symbolnumber': u'4', 'windDirection': {'code': u'SSW', 'degrees': None, 'name': u'S\xf8r-s\xf8rvest'}, 'symbolname': u'Skyet'}, {'from': u'2012-01-17T23:00:00', 'temperature': u'-2', 'pressure': u'1022.3', 'precipitation': u'0', 'period': None, 'to': u'2012-01-18T00:00:00', 'windSpeed': {'mps': u'0.4', 'name': u'Flau vind'}, 'symbolnumber': u'4', 'windDirection': {'code': u'SSE', 'degrees': None, 'name': u'S\xf8r-s\xf8r\xf8st'}, 'symbolname': u'Skyet'}, {'from': u'2012-01-18T00:00:00', 'temperature': u'-2', 'pressure': u'1022.0', 'precipitation': u'0', 'period': None, 'to': u'2012-01-18T01:00:00', 'windSpeed': {'mps': u'0.0', 'name': u'Stille'}, 'symbolnumber': u'4', 'windDirection': {'code': u'S', 'degrees': None, 'name': u'S\xf8r'}, 'symbolname': u'Skyet'}, {'from': u'2012-01-18T01:00:00', 'temperature': u'-2', 'pressure': u'1021.6', 'precipitation': u'0', 'period': None, 'to': u'2012-01-18T02:00:00', 'windSpeed': {'mps': u'0.7', 'name': u'Flau vind'}, 'symbolnumber': u'4', 'windDirection': {'code': u'NNE', 'degrees': None, 'name': u'Nord-nord\xf8st'}, 'symbolname': u'Skyet'}, {'from': u'2012-01-18T02:00:00', 'temperature': u'-2', 'pressure': u'1020.9', 'precipitation': u'0', 'period': None, 'to': u'2012-01-18T03:00:00', 'windSpeed': {'mps': u'0.9', 'name': u'Flau vind'}, 'symbolnumber': u'4', 'windDirection': {'code': u'ENE', 'degrees': None, 'name': u'\xd8st-nord\xf8st'}, 'symbolname': u'Skyet'}, {'from': u'2012-01-18T03:00:00', 'temperature': u'-2', 'pressure': u'1020.5', 'precipitation': u'0', 'period': None, 'to': u'2012-01-18T04:00:00', 'windSpeed': {'mps': u'0.6', 'name': u'Flau vind'}, 'symbolnumber': u'4', 'windDirection': {'code': u'E', 'degrees': None, 'name': u'\xd8st'}, 'symbolname': u'Skyet'}, {'from': u'2012-01-18T04:00:00', 'temperature': u'-2', 'pressure': u'1020.0', 'precipitation': u'0', 'period': None, 'to': u'2012-01-18T05:00:00', 'windSpeed': {'mps': u'0.5', 'name': u'Flau vind'}, 'symbolnumber': u'4', 'windDirection': {'code': u'ENE', 'degrees': None, 'name': u'\xd8st-nord\xf8st'}, 'symbolname': u'Skyet'}, {'from': u'2012-01-18T05:00:00', 'temperature': u'-3', 'pressure': u'1019.2', 'precipitation': u'0', 'period': None, 'to': u'2012-01-18T06:00:00', 'windSpeed': {'mps': u'1.3', 'name': u'Flau vind'}, 'symbolnumber': u'4', 'windDirection': {'code': u'E', 'degrees': None, 'name': u'\xd8st'}, 'symbolname': u'Skyet'}, {'from': u'2012-01-18T06:00:00', 'temperature': u'-3', 'pressure': u'1018.6', 'precipitation': u'0', 'period': None, 'to': u'2012-01-18T07:00:00', 'windSpeed': {'mps': u'1.1', 'name': u'Flau vind'}, 'symbolnumber': u'4', 'windDirection': {'code': u'ESE', 'degrees': None, 'name': u'\xd8st-s\xf8r\xf8st'}, 'symbolname': u'Skyet'}, {'from': u'2012-01-18T07:00:00', 'temperature': u'-3', 'pressure': u'1017.8', 'precipitation': u'0', 'period': None, 'to': u'2012-01-18T08:00:00', 'windSpeed': {'mps': u'1.0', 'name': u'Flau vind'}, 'symbolnumber': u'4', 'windDirection': {'code': u'E', 'degrees': None, 'name': u'\xd8st'}, 'symbolname': u'Skyet'}, {'from': u'2012-01-18T08:00:00', 'temperature': u'-3', 'pressure': u'1017.4', 'precipitation': u'0', 'period': None, 'to': u'2012-01-18T09:00:00', 'windSpeed': {'mps': u'1.0', 'name': u'Flau vind'}, 'symbolnumber': u'4', 'windDirection': {'code': u'E', 'degrees': None, 'name': u'\xd8st'}, 'symbolname': u'Skyet'}, {'from': u'2012-01-18T09:00:00', 'temperature': u'-3', 'pressure': u'1016.5', 'precipitation': u'0', 'period': None, 'to': u'2012-01-18T10:00:00', 'windSpeed': {'mps': u'1.5', 'name': u'Flau vind'}, 'symbolnumber': u'4', 'windDirection': {'code': u'ESE', 'degrees': None, 'name': u'\xd8st-s\xf8r\xf8st'}, 'symbolname': u'Skyet'}, {'from': u'2012-01-18T10:00:00', 'temperature': u'-2', 'pressure': u'1016.2', 'precipitation': u'0', 'period': None, 'to': u'2012-01-18T11:00:00', 'windSpeed': {'mps': u'1.2', 'name': u'Flau vind'}, 'symbolnumber': u'4', 'windDirection': {'code': u'SSE', 'degrees': None, 'name': u'S\xf8r-s\xf8r\xf8st'}, 'symbolname': u'Skyet'}, {'from': u'2012-01-18T11:00:00', 'temperature': u'-2', 'pressure': u'1014.6', 'precipitation': u'0', 'period': None, 'to': u'2012-01-18T12:00:00', 'windSpeed': {'mps': u'1.8', 'name': u'Svak vind'}, 'symbolnumber': u'4', 'windDirection': {'code': u'ESE', 'degrees': None, 'name': u'\xd8st-s\xf8r\xf8st'}, 'symbolname': u'Skyet'}, {'from': u'2012-01-18T12:00:00', 'temperature': u'-2', 'pressure': u'1013.2', 'precipitation': u'0', 'period': None, 'to': u'2012-01-18T13:00:00', 'windSpeed': {'mps': u'1.7', 'name': u'Svak vind'}, 'symbolnumber': u'4', 'windDirection': {'code': u'SE', 'degrees': None, 'name': u'S\xf8r\xf8st'}, 'symbolname': u'Skyet'}, {'from': u'2012-01-18T13:00:00', 'temperature': u'-1', 'pressure': u'1012.1', 'precipitation': u'0', 'period': None, 'to': u'2012-01-18T14:00:00', 'windSpeed': {'mps': u'1.7', 'name': u'Svak vind'}, 'symbolnumber': u'4', 'windDirection': {'code': u'SSE', 'degrees': None, 'name': u'S\xf8r-s\xf8r\xf8st'}, 'symbolname': u'Skyet'}, {'from': u'2012-01-18T14:00:00', 'temperature': u'-1', 'pressure': u'1011.1', 'precipitation': u'0', 'period': None, 'to': u'2012-01-18T15:00:00', 'windSpeed': {'mps': u'1.8', 'name': u'Svak vind'}, 'symbolnumber': u'4', 'windDirection': {'code': u'S', 'degrees': None, 'name': u'S\xf8r'}, 'symbolname': u'Skyet'}, {'from': u'2012-01-18T15:00:00', 'temperature': u'0', 'pressure': u'1009.1', 'precipitation': u'2.2', 'period': None, 'to': u'2012-01-18T16:00:00', 'windSpeed': {'mps': u'1.7', 'name': u'Svak vind'}, 'symbolnumber': u'13', 'windDirection': {'code': u'SSE', 'degrees': None, 'name': u'S\xf8r-s\xf8r\xf8st'}, 'symbolname': u'Sn\xf8'}, {'from': u'2012-01-18T16:00:00', 'temperature': u'0', 'pressure': u'1007.1', 'precipitation': u'1.2', 'period': None, 'to': u'2012-01-18T17:00:00', 'windSpeed': {'mps': u'1.5', 'name': u'Flau vind'}, 'symbolnumber': u'12', 'windDirection': {'code': u'SSE', 'degrees': None, 'name': u'S\xf8r-s\xf8r\xf8st'}, 'symbolname': u'Sludd'}, {'from': u'2012-01-18T17:00:00', 'temperature': u'1', 'pressure': u'1006.0', 'precipitation': u'0.2', 'period': None, 'to': u'2012-01-18T18:00:00', 'windSpeed': {'mps': u'2.7', 'name': u'Svak vind'}, 'symbolnumber': u'4', 'windDirection': {'code': u'SSW', 'degrees': None, 'name': u'S\xf8r-s\xf8rvest'}, 'symbolname': u'Skyet'}, {'from': u'2012-01-18T18:00:00', 'temperature': u'2', 'pressure': u'1005.4', 'precipitation': u'0', 'period': None, 'to': u'2012-01-18T19:00:00', 'windSpeed': {'mps': u'3.1', 'name': u'Svak vind'}, 'symbolnumber': u'4', 'windDirection': {'code': u'SW', 'degrees': None, 'name': u'S\xf8rvest'}, 'symbolname': u'Skyet'}, {'from': u'2012-01-18T19:00:00', 'temperature': u'2', 'pressure': u'1004.0', 'precipitation': u'0', 'period': None, 'to': u'2012-01-18T20:00:00', 'windSpeed': {'mps': u'2.4', 'name': u'Svak vind'}, 'symbolnumber': u'3', 'windDirection': {'code': u'SW', 'degrees': None, 'name': u'S\xf8rvest'}, 'symbolname': u'Delvis skyet'}, {'from': u'2012-01-18T20:00:00', 'temperature': u'2', 'pressure': u'1003.7', 'precipitation': u'0', 'period': None, 'to': u'2012-01-18T21:00:00', 'windSpeed': {'mps': u'2.3', 'name': u'Svak vind'}, 'symbolnumber': u'3', 'windDirection': {'code': u'WSW', 'degrees': None, 'name': u'Vest-s\xf8rvest'}, 'symbolname': u'Delvis skyet'}, {'from': u'2012-01-18T21:00:00', 'temperature': u'2', 'pressure': u'1003.8', 'precipitation': u'0', 'period': None, 'to': u'2012-01-18T22:00:00', 'windSpeed': {'mps': u'2.7', 'name': u'Svak vind'}, 'symbolnumber': u'3', 'windDirection': {'code': u'WSW', 'degrees': None, 'name': u'Vest-s\xf8rvest'}, 'symbolname': u'Delvis skyet'}, {'from': u'2012-01-18T22:00:00', 'temperature': u'0', 'pressure': u'1004.1', 'precipitation': u'0', 'period': None, 'to': u'2012-01-18T23:00:00', 'windSpeed': {'mps': u'2.0', 'name': u'Svak vind'}, 'symbolnumber': u'3', 'windDirection': {'code': u'WSW', 'degrees': None, 'name': u'Vest-s\xf8rvest'}, 'symbolname': u'Delvis skyet'}, {'from': u'2012-01-18T23:00:00', 'temperature': u'-1', 'pressure': u'1004.3', 'precipitation': u'0', 'period': None, 'to': u'2012-01-19T00:00:00', 'windSpeed': {'mps': u'1.1', 'name': u'Flau vind'}, 'symbolnumber': u'2', 'windDirection': {'code': u'W', 'degrees': None, 'name': u'Vest'}, 'symbolname': u'Lettskyet'}, {'from': u'2012-01-19T00:00:00', 'temperature': u'-2', 'pressure': u'1003.9', 'precipitation': u'0', 'period': None, 'to': u'2012-01-19T01:00:00', 'windSpeed': {'mps': u'1.9', 'name': u'Svak vind'}, 'symbolnumber': u'2', 'windDirection': {'code': u'WSW', 'degrees': None, 'name': u'Vest-s\xf8rvest'}, 'symbolname': u'Lettskyet'}, {'from': u'2012-01-19T01:00:00', 'temperature': u'-2', 'pressure': u'1003.6', 'precipitation': u'0', 'period': None, 'to': u'2012-01-19T02:00:00', 'windSpeed': {'mps': u'1.3', 'name': u'Flau vind'}, 'symbolnumber': u'1', 'windDirection': {'code': u'W', 'degrees': None, 'name': u'Vest'}, 'symbolname': u'Klarv\xe6r'}, {'from': u'2012-01-19T02:00:00', 'temperature': u'-3', 'pressure': u'1002.8', 'precipitation': u'0', 'period': None, 'to': u'2012-01-19T03:00:00', 'windSpeed': {'mps': u'0.7', 'name': u'Flau vind'}, 'symbolnumber': u'3', 'windDirection': {'code': u'S', 'degrees': None, 'name': u'S\xf8r'}, 'symbolname': u'Delvis skyet'}, {'from': u'2012-01-19T03:00:00', 'temperature': u'-5', 'pressure': u'1002.2', 'precipitation': u'0', 'period': None, 'to': u'2012-01-19T04:00:00', 'windSpeed': {'mps': u'1.9', 'name': u'Svak vind'}, 'symbolnumber': u'2', 'windDirection': {'code': u'SW', 'degrees': None, 'name': u'S\xf8rvest'}, 'symbolname': u'Lettskyet'}, {'from': u'2012-01-19T04:00:00', 'temperature': u'-5', 'pressure': u'1001.5', 'precipitation': u'0', 'period': None, 'to': u'2012-01-19T05:00:00', 'windSpeed': {'mps': u'2.2', 'name': u'Svak vind'}, 'symbolnumber': u'3', 'windDirection': {'code': u'SSW', 'degrees': None, 'name': u'S\xf8r-s\xf8rvest'}, 'symbolname': u'Delvis skyet'}, {'from': u'2012-01-19T05:00:00', 'temperature': u'-4', 'pressure': u'1000.7', 'precipitation': u'0', 'period': None, 'to': u'2012-01-19T06:00:00', 'windSpeed': {'mps': u'1.3', 'name': u'Flau vind'}, 'symbolnumber': u'4', 'windDirection': {'code': u'SSW', 'degrees': None, 'name': u'S\xf8r-s\xf8rvest'}, 'symbolname': u'Skyet'}, {'from': u'2012-01-19T06:00:00', 'temperature': u'-5', 'pressure': u'1001.0', 'precipitation': u'0', 'period': None, 'to': u'2012-01-19T07:00:00', 'windSpeed': {'mps': u'2.2', 'name': u'Svak vind'}, 'symbolnumber': u'3', 'windDirection': {'code': u'W', 'degrees': None, 'name': u'Vest'}, 'symbolname': u'Delvis skyet'}, {'from': u'2012-01-19T07:00:00', 'temperature': u'-5', 'pressure': u'1000.7', 'precipitation': u'0', 'period': None, 'to': u'2012-01-19T08:00:00', 'windSpeed': {'mps': u'2.0', 'name': u'Svak vind'}, 'symbolnumber': u'3', 'windDirection': {'code': u'W', 'degrees': None, 'name': u'Vest'}, 'symbolname': u'Delvis skyet'}, {'from': u'2012-01-19T08:00:00', 'temperature': u'-5', 'pressure': u'1000.5', 'precipitation': u'0', 'period': None, 'to': u'2012-01-19T09:00:00', 'windSpeed': {'mps': u'2.0', 'name': u'Svak vind'}, 'symbolnumber': u'2', 'windDirection': {'code': u'W', 'degrees': None, 'name': u'Vest'}, 'symbolname': u'Lettskyet'}, {'from': u'2012-01-19T09:00:00', 'temperature': u'-5', 'pressure': u'1000.0', 'precipitation': u'0', 'period': None, 'to': u'2012-01-19T10:00:00', 'windSpeed': {'mps': u'1.5', 'name': u'Flau vind'}, 'symbolnumber': u'3', 'windDirection': {'code': u'WSW', 'degrees': None, 'name': u'Vest-s\xf8rvest'}, 'symbolname': u'Delvis skyet'}, {'from': u'2012-01-19T10:00:00', 'temperature': u'-4', 'pressure': u'999.7', 'precipitation': u'0', 'period': None, 'to': u'2012-01-19T11:00:00', 'windSpeed': {'mps': u'1.5', 'name': u'Flau vind'}, 'symbolnumber': u'4', 'windDirection': {'code': u'W', 'degrees': None, 'name': u'Vest'}, 'symbolname': u'Skyet'}, {'from': u'2012-01-19T11:00:00', 'temperature': u'-5', 'pressure': u'999.8', 'precipitation': u'0', 'period': None, 'to': u'2012-01-19T12:00:00', 'windSpeed': {'mps': u'1.6', 'name': u'Svak vind'}, 'symbolnumber': u'4', 'windDirection': {'code': u'SSW', 'degrees': None, 'name': u'S\xf8r-s\xf8rvest'}, 'symbolname': u'Skyet'}, {'from': u'2012-01-19T12:00:00', 'temperature': u'-3', 'pressure': u'999.1', 'precipitation': u'0', 'period': None, 'to': u'2012-01-19T13:00:00', 'windSpeed': {'mps': u'0.8', 'name': u'Flau vind'}, 'symbolnumber': u'2', 'windDirection': {'code': u'WNW', 'degrees': None, 'name': u'Vest-nordvest'}, 'symbolname': u'Lettskyet'}, {'from': u'2012-01-19T13:00:00', 'temperature': u'-3', 'pressure': u'998.8', 'precipitation': u'0', 'period': None, 'to': u'2012-01-19T14:00:00', 'windSpeed': {'mps': u'0.7', 'name': u'Flau vind'}, 'symbolnumber': u'3', 'windDirection': {'code': u'WSW', 'degrees': None, 'name': u'Vest-s\xf8rvest'}, 'symbolname': u'Delvis skyet'}, {'from': u'2012-01-19T14:00:00', 'temperature': u'-3', 'pressure': u'998.6', 'precipitation': u'0', 'period': None, 'to': u'2012-01-19T15:00:00', 'windSpeed': {'mps': u'1.1', 'name': u'Flau vind'}, 'symbolnumber': u'2', 'windDirection': {'code': u'W', 'degrees': None, 'name': u'Vest'}, 'symbolname': u'Lettskyet'}, {'from': u'2012-01-19T15:00:00', 'temperature': u'-3', 'pressure': u'998.5', 'precipitation': u'0', 'period': None, 'to': u'2012-01-19T16:00:00', 'windSpeed': {'mps': u'0.9', 'name': u'Flau vind'}, 'symbolnumber': u'2', 'windDirection': {'code': u'SW', 'degrees': None, 'name': u'S\xf8rvest'}, 'symbolname': u'Lettskyet'}, {'from': u'2012-01-19T16:00:00', 'temperature': u'-4', 'pressure': u'999.0', 'precipitation': u'0', 'period': None, 'to': u'2012-01-19T17:00:00', 'windSpeed': {'mps': u'1.4', 'name': u'Flau vind'}, 'symbolnumber': u'3', 'windDirection': {'code': u'SSW', 'degrees': None, 'name': u'S\xf8r-s\xf8rvest'}, 'symbolname': u'Delvis skyet'}, {'from': u'2012-01-19T17:00:00', 'temperature': u'-4', 'pressure': u'998.9', 'precipitation': u'0', 'period': None, 'to': u'2012-01-19T18:00:00', 'windSpeed': {'mps': u'1.0', 'name': u'Flau vind'}, 'symbolnumber': u'2', 'windDirection': {'code': u'WSW', 'degrees': None, 'name': u'Vest-s\xf8rvest'}, 'symbolname': u'Lettskyet'}, {'from': u'2012-01-19T18:00:00', 'temperature': u'-4', 'pressure': u'999.2', 'precipitation': u'0', 'period': None, 'to': u'2012-01-19T19:00:00', 'windSpeed': {'mps': u'1.5', 'name': u'Flau vind'}, 'symbolnumber': u'2', 'windDirection': {'code': u'W', 'degrees': None, 'name': u'Vest'}, 'symbolname': u'Lettskyet'}, {'from': u'2012-01-19T19:00:00', 'temperature': u'-4', 'pressure': u'999.1', 'precipitation': u'0', 'period': None, 'to': u'2012-01-19T20:00:00', 'windSpeed': {'mps': u'0.8', 'name': u'Flau vind'}, 'symbolnumber': u'1', 'windDirection': {'code': u'W', 'degrees': None, 'name': u'Vest'}, 'symbolname': u'Klarv\xe6r'}, {'from': u'2012-01-19T20:00:00', 'temperature': u'-5', 'pressure': u'998.9', 'precipitation': u'0', 'period': None, 'to': u'2012-01-19T21:00:00', 'windSpeed': {'mps': u'1.1', 'name': u'Flau vind'}, 'symbolnumber': u'3', 'windDirection': {'code': u'NW', 'degrees': None, 'name': u'Nordvest'}, 'symbolname': u'Delvis skyet'}], 'text': [{'to': u'2012-01-18', 'from': u'2012-01-17', 'description': u'\xd8stlandet og Telemark: Skiftende bris. Oppholdsv\xe6r. Fra sent onsdag formiddag s\xf8rlig bris, p\xe5 kysten frisk bris, senere liten kuling utsatte steder. Tilskyende og etter hvert sn\xf8, f\xf8rst i vest. Utover kvelden vestlig bris, frisk bris utsatte steder. Oppklarning.', 'title': u'tirsdag og onsdag'}, {'to': u'2012-01-19', 'from': u'2012-01-19', 'description': u'\xd8stlandet og Telemark: Skiftende bris. Opphold og gl\xf8tt av sol.', 'title': u'torsdag'}, {'to': u'2012-01-20', 'from': u'2012-01-20', 'description': u'Telemark, \xd8stlandet og Fjellet i S\xf8r-Norge: Bris mellom vest og nord. Lettskyet, for det meste pent v\xe6r, men i grensestr\xf8kene mot Sverige noe mer skyer og kan hende litt spredt sn\xf8. Kaldere.', 'title': u'fredag'}, {'to': u'2012-01-22', 'from': u'2012-01-21', 'description': u'S\xf8r-Norge s\xf8r for Stad og Dovre: Skiftende vindforhold, p\xe5 Vestlandet periodevis s\xf8r\xf8stlig kuling, og p\xe5 Skagerrakkysten av og til nord\xf8stlig kuling. Perioder med sn\xf8 og sn\xf8byger og gjennomg\xe5ende lave temperaturer.', 'title': u'l\xf8rdag og s\xf8ndag'}, {'to': u'2012-01-26', 'from': u'2012-01-23', 'description': u'Norge og Spitsbergen: Denne uken er utsiktene noe usikre, men mest et sannsynlig vil svake lavtrykk passere i en s\xf8rlig bane fra Nordsj\xf8en mot \xd8stersj\xf8en. \n     S\xf8r for Stad og Dovre ventes vind fra nord eller \xf8st, av og til opp i kuling. Perioder med sn\xf8, av og til regn p\xe5 kysten lengst i s\xf8r. Ogs\xe5 dager med opphold og sol. Nord for Stad og Dovre fortsatt fralandsvind, periodevis kuling, og ellers lange perioder med pent v\xe6r. Fortsatt lave temperaturer.\n     P\xe5 Spitsbergen ventes overveiende nord\xf8stlig bris, stort sett oppholdsv\xe6r og sm\xe5 endringer i temperaturforholdene.', 'title': u'mandag til torsdag'}], 'sunset': u'2012-01-17T15:52:24', 'location': u'0458 Oslo', 'sunrise': u'2012-01-17T09:01:54'}
 
@@ -31,34 +35,44 @@ def get_pyyrascii (location):
    1     ###--/            _______
    0 -###
   -1
-     ^\ ^| ^/ -> v\ v| v/ <- ^|  O  Wind direction
+         _  -  =  #  _ _- -= =# ##  Rain ( _-=#)
+     NW  N NE  E SE  S SW  W  N  O  Wind direction
      10 11 12 13 14 15 16 17 18 19  Time
+
+     ^\ ^| ^/ -> v\ v| v/ <- ^|  O  Wind direction
 
      ^   ^  ^     \  |  /     ^     Wind direction
       \  |  / ->  v  v  v <-  \  O  Wind direction
-     10 11 12 13 14 15 16 17 18 19  Time
 
      35 00 02 04 07 18 20 28 30  -  Wind angle (/10)
       1  2  2  3  2  2  1  1  1  0  Wind strength
-     10 11 12 13 14 15 16 17 18 19  Time
+
+      0  2  1  1  0  5  0  0  0  0  Rain (mm)
+     00 12 01 01 00 39 99  0  0  0  Rain (mm low, high)
   '''
 
 
   graph=dict()
   graph[0] = " 'C"
-  graph[10] = "  " #wind
-  graph[11] = "  " #time
+  graph[10] = "   " #rain
+  graph[11] = "   " #wind
+  graph[12] = "   " #time
   temphigh=0
   templow=0
-  hourcount=10
-  ret = "Meteogram for " + location + " for the next " + str(hourcount) + " hours\n"
+  hourcount=22
+  ret = "Meteogram for " + location + " for the next " + str(hourcount) + \
+    " hours.\n"
 
-  #TODO: Symbols that display wind direction in two characters
+#  wind={
+#    "N":"I^", "NNE":"/^", "NE":"/A", "ENE":"/^", \
+#    "E":"->", "ESE":"\\v", "SE":"\V", "SSE":"\\v", \
+#    "S":"Iv", "SSW":"/v", "SW":"/V", "WSW":"/v", \
+#    "W":"<-", "WNW":"\^", "NW":"\A", "NNW":"\^"}
   wind={
-    "N":"I^", "NNE":"/^", "NE":"/A", "ENE":"/^", \
-    "E":"->", "ESE":"\\v", "SE":"\V", "SSE":"\\v", \
-    "S":"Iv", "SSW":"/v", "SW":"/V", "WSW":"/v", \
-    "W":"<-", "WNW":"\^", "NW":"\A", "NNW":"\^"}
+    "N":" N", "NNE":"NE", "NE":"NE", "ENE":"NE", \
+    "E":" E", "ESE":"SE", "SE":"SE", "SSE":"SE", \
+    "S":" S", "SSW":"SW", "SW":"SW", "WSW":"SW", \
+    "W":" W", "WNW":"NW", "NW":"NW", "NNW":"NW"}
 
   #collect temps
   for item in weatherdata['tabular'][:hourcount]:
@@ -91,32 +105,53 @@ def get_pyyrascii (location):
   time=[]
   #create graph
   for item in weatherdata['tabular'][:hourcount]:
+    #create rain on y axis
+    graph[10] += " " + '%2.0f' % float(item['precipitation'])
+
     #create wind on y axis
-    graph[10] += " " + wind[ item['windDirection']['code'] ]
+    graph[11] += " " + wind[ item['windDirection']['code'] ]
     #create time on y axis
-    graph[11] += " " + str(item['from'])[11:13] #2012-01-17T21:00
+    graph[12] += " " + str(item['from'])[11:13] #2012-01-17T21:00
     #create time range
     time.append(str(item['from'])[11:13])
 
     #for each y look for matching temp
     for i in range(1, hourcount):
+      if 9 < i:
+        continue
+
       try:
         if item['temperature'].strip() == graph[i][:3].strip():
-	  #print "==", item['temperature'].strip(), " ", graph[i][:3].strip()
-	  graph[i] += "--"
+          if int(item['symbolnumber']) in [3,4,15]:
+            graph[i] += "==="
+          elif int(item['symbolnumber']) in [5,6,7,8,9,10,11,12,13,14]:
+            graph[i] += "###"
+          else:
+            graph[i] += "---"
         else:
-	  #print "!=", item['temperature'].strip(), " ", graph[i][:3].strip()
-	  graph[i] += "  "
+          graph[i] += "   "
       except KeyError:
         pass
 
   #  print item
   #  break
-    continue
+
+  #Ledgends
+  graph[10] += " Rain (mm)"
+  graph[11] += " Wind dir."
+  graph[12] += " Hour"
 
   #print graph
   for g in graph.values():
     ret += g + "\n"
+
+  ret += '''\nLedgend:
+ --- = Sunny, or scattered
+ === = Partly clouded, clouded or fog
+ ### = Rain, snow, storm
+
+Weather forecast from yr.no, delivered by the Norwegian Meteorological Institute and the NRK.
+'''
 
   return ret
 
