@@ -1,4 +1,17 @@
-An attempt to create an ASCII version of http://www.yr.no/sted/Norge/Oslo/Oslo/Oslo/time_for_time.html.
+An ASCII version of http://www.yr.no/sted/Norge/Oslo/Oslo/Oslo/time_for_time.html.
 
-Please checkout https://github.com/ways/pyyrlib to project directory.
+Requirements
+------------
+
+* Please checkout https://github.com/ways/pyyrlib to project directory.
+
+TODO
+----
+
+* Nicer wind indicators
+* Better error handling
+* Icons/large weather-right-now display (not graph-related)
+* Change temperature line according to cloud layer
+* Add rain to bottom of graph
+* Extend graph to use full width (~80 characters minus padding)
 

@@ -31,7 +31,15 @@ def get_pyyrascii (location):
    1     ###--/            _______
    0 -###
   -1
-     ^| ^| ^/ ^/ ^/ -> -> \v |v  O  Wind direction
+     ^\ ^| ^/ -> v\ v| v/ <- ^|  O  Wind direction
+     10 11 12 13 14 15 16 17 18 19  Time
+
+     ^   ^  ^     \  |  /     ^     Wind direction
+      \  |  / ->  v  v  v <-  \  O  Wind direction
+     10 11 12 13 14 15 16 17 18 19  Time
+
+     35 00 02 04 07 18 20 28 30  -  Wind angle (/10)
+      1  2  2  3  2  2  1  1  1  0  Wind strength
      10 11 12 13 14 15 16 17 18 19  Time
   '''
 
