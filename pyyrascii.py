@@ -10,7 +10,7 @@ PyYrAscii is a simple python grapher for using Yr.no’s weather data API.
 You are welcome to participate in this project!
 """
 
-__version__ = '0.1a'
+__version__ = '0.2'
 __url__ = 'https://github.com/ways/pyyrascii'
 __license__ = 'GPL License'
 __docformat__ = 'markdown'

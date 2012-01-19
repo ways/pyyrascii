@@ -12,7 +12,6 @@ TODO
 
 * Icons/large weather-right-now display (not graph-related).
 * Extend rain to include min/max.
-* Improve temperature axis. Scaling is wrong when temp is very high or low.
 
 
 Result
