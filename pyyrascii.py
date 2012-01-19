@@ -47,6 +47,10 @@ def get_pyyrascii (location):
 
       0  2  1  1  0  5  0  0  0  0  Rain (mm)
      00 12 01 01 00 39 99  0  0  0  Rain (mm low, high)
+
+Ledgend:
+ ---                   ===                              ###
+ L Sunny, or scattered L Partly clouded, clouded or fog L Rain, snow, storm
   '''
 
 
@@ -78,22 +82,23 @@ def get_pyyrascii (location):
 
   #collect temps
   for item in weatherdata['tabular'][:hourcount]:
-    print item['temperature']
     if int(item['temperature']) > temphigh:
-      temphigh = item['temperature']
+      temphigh = int(item['temperature'])
+      #print "h" + item['temperature']
 
     if int(item['temperature']) < templow:
-      templow = item['temperature']
+      templow = int(item['temperature'])
+      #print "l" + item['temperature']
 
   #create temp range
-  print "high",temphigh
-  print "low",templow
+  #print "high",temphigh
+  #print "low",templow
   temps=[]
   for t in range(int(temphigh), int(templow), -1):
     temps.append(t)
 
   #extend temp range
-  print "temps",temps
+  #print "temps",temps
   #temps = [ (temps[0] +1) ] + temps
   while len(temps) < tempheight:
     temps.append( temps[len(temps)-1] -1 )
