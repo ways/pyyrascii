@@ -1,14 +1,43 @@
 An ASCII version of http://www.yr.no/sted/Norge/Oslo/Oslo/Oslo/time_for_time.html.
 
+
 Requirements
 ------------
 
 * Please checkout https://github.com/ways/pyyrlib to project directory.
 
+
 TODO
 ----
 
-* Better error handling
-* Icons/large weather-right-now display (not graph-related)
+* Icons/large weather-right-now display (not graph-related).
 * Extend rain to include min/max.
+* Improve temperature axis. Scaling is wrong when temp is very high or low.
 
+
+Result
+------
+
+$ finger 0458@graph.no
+Meteogram for 0458 for the next 22 hours.
+ 'C
+  1                                                                  
+  0                                                                  
+ -1                                                                  
+ -2                                                                  
+ -3===   ===                                                         
+ -4   ===      =========                                             
+ -5         ===         ===                                          
+ -6                        ======---------                           
+ -7                                       ===         ===============
+ -8  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 Rain (mm)
+    NW NW  N SW NW NW NW NW NW NW NW NW NW NE NE NE NE NE NE NE NE NE Wind dir.
+    13 14 15 16 17 18 19 20 21 22 23 00 01 02 03 04 05 06 07 08 09 10 Hour
+
+Ledgend:
+ --- = Sunny, or scattered
+ === = Partly clouded, clouded or fog
+ ### = Rain, snow, storm
+
+Weather forecast from yr.no, delivered by the Norwegian Meteorological Institut
+e and the NRK.
