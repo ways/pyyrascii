@@ -160,34 +160,11 @@ Ledgend:
 
   ret += '''\nLedgend:   --- : Sunny   === : Clouded   ### : Rain/snow
 
-Weather forecast from yr.no, delivered by the Norwegian Meteorological Institute and the NRK.'''
+Weather forecast from yr.no, delivered by the Norwegian Meteorological Institute and the NRK.
+'''
 
   return ret
 
-'''
-
-crap data for later testing:
-
-  # Format precipitation if there are any
-  if item['precipitation'] != '0.0':
-    precipitation = '%s mm nedbor,' % (item['precipitation'])
-  else:
-    precipitation = ''
-  # Format windSpeed if it is higher than 5
-  if item['windSpeed']['mps'] != '.' or int(item['windSpeed']['mps']) > 5:
-    windSpeed = '%s (%s mps) %s' % (item['windSpeed']['name'], item['windSpeed']['mps'], item['windDirection']['code'])
-  else:
-    windSpeed = ''
-
-  ret += item['from'][12]
-  ret += item['symbolnumber']
-#  ret += weathergfx.get_wind(item['windDirection']['code'])
-  ret += "%s\n" % (weatherdata['location'])
-  ret += item['symbolname'] + ", "
-  ret += precipitation + " " + windSpeed.lower() + "\n\n"
-
-print ret
-'''
 
 if __name__ == "__main__":
   # Test if location is provided
@@ -198,4 +175,3 @@ if __name__ == "__main__":
 
   print get_pyyrascii(location)
   sys.exit(0)
-
