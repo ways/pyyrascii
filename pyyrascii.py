@@ -15,8 +15,8 @@ __url__ = 'https://github.com/ways/pyyrascii'
 __license__ = 'GPL License'
 __docformat__ = 'markdown'
 
-import SocketServer, subprocess, re, sys
-import pyyrlib
+import SocketServer, subprocess, re, sys, string
+import pyyrlib # https://github.com/ways/pyyrlib
 
 
 def get_pyyrascii (location):
@@ -29,7 +29,7 @@ def get_pyyrascii (location):
   'C
    4
    3
-   2           ****-----___
+   2           /***-----___
    1     ###--/            _______
    0 -###
   -1
@@ -66,8 +66,8 @@ Ledgend:
   temphigh=-20
   templow=20
   hourcount=22
-  ret += "            Meteogram for " + location + " for the next " + \
-    str(hourcount) + " hours.\n"
+  ret += string.center("Meteogram for " + location + " for the next " + \
+    str(hourcount) + " hours.", 80) + "\n"
   #graph[0] += "     Meteogram for " + location + " for the next " + \
   #  str(hourcount) + " hours."
 
@@ -120,7 +120,9 @@ Ledgend:
     #create rain on y axis
     graph[rainline] += " " + '%2.0f' % float(item['precipitation'])
     #create wind on y axis
-    graph[windline] += " " + wind[ item['windDirection']['code'] ]
+    graph[windline] += " " + \
+      (wind[ item['windDirection']['code'] ] \
+      if 0 != item['windSpeed']['mps'] else " O")
     #create time on y axis
     graph[timeline] += " " + str(item['from'])[11:13] #2012-01-17T21:00
     #create time range
