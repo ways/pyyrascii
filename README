@@ -17,26 +17,23 @@ TODO
 Result
 ------
 
-$ finger 0458@graph.no
-Meteogram for 0458 for the next 22 hours.
+$ ./pyyrascii.py 0458
+            Meteogram for 0458 for the next 22 hours.
  'C
-  1                                                                  
-  0                                                                  
- -1                                                                  
- -2                                                                  
- -3===   ===                                                         
- -4   ===      =========                                             
- -5         ===         ===                                          
- -6                        ======---------                           
- -7                                       ===         ===============
- -8  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 Rain (mm)
-    NW NW  N SW NW NW NW NW NW NW NW NW NW NE NE NE NE NE NE NE NE NE Wind dir.
-    13 14 15 16 17 18 19 20 21 22 23 00 01 02 03 04 05 06 07 08 09 10 Hour
+ -2                                       ###===============         
+ -3                                    ###                  ###===###
+ -4                                 ###                              
+ -5                              ###                                 
+ -6                                                                  
+ -7                        ######                                    
+ -8                     ###                                          
+ -9            ======###                                             
+-10===   ======                                                      
+-11   ===                                                            
+     0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 Rain (mm)
+    NE NE NE NE NE NE NE NE NE NE NE NE NE NE NE NE NE NE NE NE NE NE Wind dir.
+    02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 Hour
 
-Ledgend:
- --- = Sunny, or scattered
- === = Partly clouded, clouded or fog
- ### = Rain, snow, storm
+Ledgend:   --- : Sunny   === : Clouded   ### : Rain/snow
 
-Weather forecast from yr.no, delivered by the Norwegian Meteorological Institut
-e and the NRK.
+Weather forecast from yr.no, delivered by the Norwegian Meteorological Institute and the NRK.
