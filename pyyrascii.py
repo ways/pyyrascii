@@ -53,27 +53,24 @@ Ledgend:
  L Sunny, or scattered L Partly clouded, clouded or fog L Rain, snow, storm
   '''
 
-
+  ret = "" #all output goes here
   graph=dict()
   graph[0] = " 'C"
-  rainline = 10
-  windline = 11
-  timeline = 12
+  tempheight = 11
+  rainline = 13
+  windline = 14
+  timeline = 15
   graph[rainline] = "   " #rain
   graph[windline] = "   " #wind
   graph[timeline] = "   " #time
-  tempheight = 9
   temphigh=-20
   templow=20
   hourcount=22
-  ret = "Meteogram for " + location + " for the next " + str(hourcount) + \
-    " hours.\n"
+  ret += "            Meteogram for " + location + " for the next " + \
+    str(hourcount) + " hours.\n"
+  #graph[0] += "     Meteogram for " + location + " for the next " + \
+  #  str(hourcount) + " hours."
 
-#  wind={
-#    "N":"I^", "NNE":"/^", "NE":"/A", "ENE":"/^", \
-#    "E":"->", "ESE":"\\v", "SE":"\V", "SSE":"\\v", \
-#    "S":"Iv", "SSW":"/v", "SW":"/V", "WSW":"/v", \
-#    "W":"<-", "WNW":"\^", "NW":"\A", "NNW":"\^"}
   wind={
     "N":" N", "NNE":"NE", "NE":"NE", "ENE":"NE", \
     "E":" E", "ESE":"SE", "SE":"SE", "SSE":"SE", \
@@ -100,9 +97,12 @@ Ledgend:
   #extend temp range
   #print "temps",temps
   #temps = [ (temps[0] +1) ] + temps
-  while len(temps) < tempheight:
-    temps.append( temps[len(temps)-1] -1 )
-    #temps = [ (temps[0] +1) ] + temps
+  for t in range(0, tempheight):
+    if len(temps)+1 < tempheight:
+      if t%2 == 0:
+        temps.append( temps[len(temps)-1] -1 )
+      else:
+        temps = [ (temps[0] +1) ] + temps
 
   for i in range(1, tempheight):
     try:
@@ -118,17 +118,17 @@ Ledgend:
   #create graph
   for item in weatherdata['tabular'][:hourcount]:
     #create rain on y axis
-    graph[10] += " " + '%2.0f' % float(item['precipitation'])
+    graph[rainline] += " " + '%2.0f' % float(item['precipitation'])
     #create wind on y axis
-    graph[11] += " " + wind[ item['windDirection']['code'] ]
+    graph[windline] += " " + wind[ item['windDirection']['code'] ]
     #create time on y axis
-    graph[12] += " " + str(item['from'])[11:13] #2012-01-17T21:00
+    graph[timeline] += " " + str(item['from'])[11:13] #2012-01-17T21:00
     #create time range
     time.append(str(item['from'])[11:13])
 
     #for each y look for matching temp
     for i in range(1, hourcount):
-      if 9 < i:
+      if tempheight < i:
         continue
 
       try:
@@ -148,21 +148,17 @@ Ledgend:
   #  break
 
   #Ledgends
-  graph[10] += " Rain (mm)"
-  graph[11] += " Wind dir."
-  graph[12] += " Hour"
+  graph[rainline] += " Rain (mm)"
+  graph[windline] += " Wind dir."
+  graph[timeline] += " Hour"
 
   #print graph
   for g in graph.values():
     ret += g + "\n"
 
-  ret += '''\nLedgend:
- --- = Sunny, or scattered
- === = Partly clouded, clouded or fog
- ### = Rain, snow, storm
+  ret += '''\nLedgend:   --- : Sunny   === : Clouded   ### : Rain/snow
 
-Weather forecast from yr.no, delivered by the Norwegian Meteorological Institute and the NRK.
-'''
+Weather forecast from yr.no, delivered by the Norwegian Meteorological Institute and the NRK.'''
 
   return ret
 
