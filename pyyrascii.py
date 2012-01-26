@@ -171,7 +171,8 @@ if __name__ == "__main__":
   if sys.argv[1] == []:
     location = "0458"
   else:
-    location = sys.argv[1]
+    location = ' '.join(sys.argv[1:])
+    print location
 
   print get_pyyrascii(location)
   sys.exit(0)
