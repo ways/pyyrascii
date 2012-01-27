@@ -23,7 +23,8 @@ def get_pyyrascii (location):
   weatherdata = pyyrlib.returnWeatherData(location, True)
 
   if not weatherdata:
-    return "Error; no weather data for selected location."
+    return "Error; no weather data for selected location " + location + \
+      ".\nAttempt a norwegian post code (4 digits) or an international city.\n"
 
   ''' Goal~
   'C
@@ -160,8 +161,7 @@ Ledgend:
 
   ret += '''\nLedgend:   --- : Sunny   === : Clouded   ### : Rain/snow
 
-Weather forecast from yr.no, delivered by the Norwegian Meteorological Institute and the NRK.
-'''
+Weather forecast from yr.no, delivered by the Norwegian Meteorological Institute and the NRK.'''
 
   return ret
 
@@ -171,8 +171,7 @@ if __name__ == "__main__":
   if sys.argv[1] == []:
     location = "0458"
   else:
-    location = ' '.join(sys.argv[1:])
-    print location
+    location = ''.join(sys.argv[1:])
 
   print get_pyyrascii(location)
   sys.exit(0)
