@@ -10,7 +10,7 @@ PyYrAscii is a simple python grapher for using Yr.no’s weather data API.
 You are welcome to participate in this project!
 """
 
-__version__ = '0.2'
+__version__ = '0.3'
 __url__ = 'https://github.com/ways/pyyrascii'
 __license__ = 'GPL License'
 __docformat__ = 'markdown'
@@ -20,7 +20,7 @@ import pyyrlib # https://github.com/ways/pyyrlib
 
 
 def get_pyyrascii (location):
-  weatherdata = pyyrlib.returnWeatherData(location, True)
+  weatherdata, source = pyyrlib.returnWeatherData(location, True)
 
   if not weatherdata:
     return "Error; no weather data for selected location " + location + \
@@ -159,9 +159,14 @@ Ledgend:
   for g in graph.values():
     ret += g + "\n"
 
-  ret += '''\nLedgend:   --- : Sunny   === : Clouded   ### : Rain/snow
-
-Weather forecast from yr.no, delivered by the Norwegian Meteorological Institute and the NRK.'''
+  ret += '\nLedgend:   --- : Sunny   === : Clouded   ### : Rain/snow \n' +\
+    'Weather forecast from yr.no, delivered by the Norwegian Meteorological ' +\
+    'Institute and the NRK.\n' +\
+    'Source: ' + \
+    str(source)\
+      .replace('http://www.yr.no/place/', '')\
+      .replace('/forecast.xml','') + \
+    "\n"
 
   return ret
 

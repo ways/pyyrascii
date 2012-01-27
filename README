@@ -1,4 +1,6 @@
-An ASCII version of http://www.yr.no/sted/Norge/Oslo/Oslo/Oslo/time_for_time.html.
+About
+-----
+An ASCII version of http://www.yr.no/sted/Norge/Oslo/Oslo/Oslo/time_for_time.html. Created to be run by a finger server.
 
 
 Requirements
@@ -11,8 +13,7 @@ TODO
 ----
 
 * Icons/large weather-right-now display (not graph-related).
-* Wind strength.
-* Logging?
+* Extend rain to include min/max.
 
 
 Result
