@@ -25,7 +25,8 @@ def get_pyyrascii (location):
   if not weatherdata:
     return "Error; no weather data for selected location " + location + ".\n" +\
       "Attempt a norwegian post code (4 digits), an international city or " +\
-      "empty.\n"
+      "empty. International names comes from " +\
+      "http://fil.nrk.no/yr/viktigestader/verda.txt" + ".\n"
 
   ''' Goal~
   'C
@@ -165,8 +166,10 @@ Ledgend:
     'Institute and the NRK.\n' +\
     'Source: ' + \
     str(source)\
+      .replace('http://www.yr.no/sted/', '')\
       .replace('http://www.yr.no/place/', '')\
-      .replace('/forecast.xml','') + \
+      .replace('/forecast.xml','')\
+      .replace('/forecast_hour_by_hour.xml','') + \
     "\n"
 
   return ret
