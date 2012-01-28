@@ -17,14 +17,15 @@ __docformat__ = 'markdown'
 
 import SocketServer, subprocess, re, sys, string
 import pyyrlib # https://github.com/ways/pyyrlib
-
+import pyofc # https://github.com/ways/pyofflinefilecache
 
 def get_pyyrascii (location):
   weatherdata, source = pyyrlib.returnWeatherData(location, True)
 
   if not weatherdata:
-    return "Error; no weather data for selected location " + location + \
-      ".\nAttempt a norwegian post code (4 digits) or an international city.\n"
+    return "Error; no weather data for selected location " + location + ".\n" +\
+      "Attempt a norwegian post code (4 digits), an international city or " +\
+      "empty.\n"
 
   ''' Goal~
   'C
