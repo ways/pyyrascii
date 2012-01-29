@@ -104,11 +104,14 @@ Legend:
   #print "temps",temps
   #temps = [ (temps[0] +1) ] + temps
   for t in range(0, tempheight):
-    if len(temps)+1 < tempheight:
-      if t%2 == 0:
-        temps.append( temps[len(temps)-1] -1 )
-      else:
-        temps = [ (temps[0] +1) ] + temps
+    try:
+      if len(temps)+1 < tempheight:
+        if t%2 == 0:
+          temps.append( temps[len(temps)-1] -1 )
+        else:
+          temps = [ (temps[0] +1) ] + temps
+    except IndexError as e:
+      pass
 
   for i in range(1, tempheight):
     try:
