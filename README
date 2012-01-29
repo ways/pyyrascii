@@ -15,7 +15,7 @@ TODO
 ----
 
 * Icons/large weather-right-now display (not graph-related).
-* Extend rain to include min/max.
+* Wind strength.
 
 
 Result
@@ -38,6 +38,6 @@ $ ./pyyrascii.py 0458
     NE NE NE NE NE NE NE NE NE NE NE NE NE NE NE NE NE NE NE NE NE NE Wind dir.
     02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 Hour
 
-Ledgend:   --- : Sunny   === : Clouded   ### : Rain/snow
+Legend:   --- : Sunny   === : Clouded   ### : Rain/snow
 
 Weather forecast from yr.no, delivered by the Norwegian Meteorological Institute and the NRK.
