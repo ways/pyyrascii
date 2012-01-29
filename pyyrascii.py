@@ -93,25 +93,22 @@ Legend:
   #create temp range
   #print "high",temphigh
   #print "low",templow
+  if temphigh == templow:
+    templow = temphigh-1
+
   temps=[]
-  try:
-    for t in range(int(temphigh), int(templow), -1):
-      temps.append(t)
-  except IndexError as e:
-    print "Error building temperatures: " + str(e)
+  for t in range(int(temphigh), int(templow), -1):
+    temps.append(t)
 
   #extend temp range
   #print "temps",temps
   #temps = [ (temps[0] +1) ] + temps
   for t in range(0, tempheight):
-    try:
-      if len(temps)+1 < tempheight:
-        if t%2 == 0:
-          temps.append( temps[len(temps)-1] -1 )
-        else:
-          temps = [ (temps[0] +1) ] + temps
-    except IndexError as e:
-      pass
+    if len(temps)+1 < tempheight:
+      if t%2 == 0:
+        temps.append( temps[len(temps)-1] -1 )
+      else:
+        temps = [ (temps[0] +1) ] + temps
 
   for i in range(1, tempheight):
     try:
