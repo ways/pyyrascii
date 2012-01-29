@@ -51,7 +51,7 @@ def get_pyyrascii (location):
       0  2  1  1  0  5  0  0  0  0  Rain (mm)
      00 12 01 01 00 39 99  0  0  0  Rain (mm low, high)
 
-Ledgend:
+Legend:
  ---                   ===                              ###
  L Sunny, or scattered L Partly clouded, clouded or fog L Rain, snow, storm
   '''
@@ -152,7 +152,7 @@ Ledgend:
   #  print item
   #  break
 
-  #Ledgends
+  #Legends
   graph[rainline] += " Rain (mm)"
   graph[windline] += " Wind dir."
   graph[timeline] += " Hour"
@@ -161,7 +161,7 @@ Ledgend:
   for g in graph.values():
     ret += g + "\n"
 
-  ret += '\nLedgend:   --- : Sunny   === : Clouded   ### : Rain/snow \n' +\
+  ret += '\nLegend:   --- : Sunny   === : Clouded   ### : Rain/snow \n' +\
     'Weather forecast from yr.no, delivered by the Norwegian Meteorological ' +\
     'Institute and the NRK.\n' +\
     'Source: ' + \
