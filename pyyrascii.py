@@ -66,8 +66,8 @@ Legend:
   graph[rainline] = "   " #rain
   graph[windline] = "   " #wind
   graph[timeline] = "   " #time
-  temphigh=-20
-  templow=20
+  temphigh=-99
+  templow=99
   hourcount=22
   ret += string.center("Meteogram for " + location + " for the next " + \
     str(hourcount) + " hours.", 80) + "\n"
@@ -94,8 +94,11 @@ Legend:
   #print "high",temphigh
   #print "low",templow
   temps=[]
-  for t in range(int(temphigh), int(templow), -1):
-    temps.append(t)
+  try:
+    for t in range(int(temphigh), int(templow), -1):
+      temps.append(t)
+  except IndexError as e:
+    print "Error building temperatures: " + str(e)
 
   #extend temp range
   #print "temps",temps
