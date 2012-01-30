@@ -70,10 +70,10 @@ Legend:
   templow=99
   hourcount=22
 
-  ret += string.center("Meteogram for " + location
+  headline = "Meteogram for " + location
   if location.isdigit():
-    ret += " for the next " + str(hourcount) + " hours.", 80)
-  ret += "\n"
+    headline += " for the next " + str(hourcount) + " hours.", 80)
+  ret += string.center(headline) + "\n"
 
   wind={
     "N":" N", "NNE":"NE", "NE":"NE", "ENE":"NE", \
