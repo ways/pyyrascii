@@ -14,8 +14,10 @@ Requirements
 TODO
 ----
 
-* Icons/large weather-right-now display (not graph-related).
+* Change in temperature may exeede the given space (~10 lines). Change to 2 degrees pr line when this happens.
 * Wind strength.
+* Foregn (not norwegian) data is low resolution (every sixth hour instead of every hour). Compensate by averaging the values missing?
+* Icons/large weather-right-now display (not graph-related).
 
 
 Result
