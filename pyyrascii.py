@@ -69,10 +69,11 @@ Legend:
   temphigh=-99
   templow=99
   hourcount=22
-  ret += string.center("Meteogram for " + location + " for the next " + \
-    str(hourcount) + " hours.", 80) + "\n"
-  #graph[0] += "     Meteogram for " + location + " for the next " + \
-  #  str(hourcount) + " hours."
+
+  ret += string.center("Meteogram for " + location
+  if location.isdigit():
+    ret += " for the next " + str(hourcount) + " hours.", 80)
+  ret += "\n"
 
   wind={
     "N":" N", "NNE":"NE", "NE":"NE", "ENE":"NE", \
