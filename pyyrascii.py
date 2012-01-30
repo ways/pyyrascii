@@ -72,8 +72,8 @@ Legend:
 
   headline = "Meteogram for " + location
   if location.isdigit():
-    headline += " for the next " + str(hourcount) + " hours.", 80)
-  ret += string.center(headline) + "\n"
+    headline += " for the next " + str(hourcount) + " hours."
+  ret += string.center(headline, 80) + "\n"
 
   wind={
     "N":" N", "NNE":"NE", "NE":"NE", "ENE":"NE", \
