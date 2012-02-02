@@ -32,16 +32,17 @@ def get_pyyrascii (location):
   ret = "" #all output goes here
   graph=dict()
   graph[0] = " 'C"
-  tempheight = 11
+  tempheight = 5
   rainline = 13
   windline = 14
   timeline = 15
   graph[rainline] = "   " #rain
   graph[windline] = "   " #wind
   graph[timeline] = "   " #time
-  temphigh=-99
-  templow=99
-  hourcount=22
+  temphigh = -99
+  templow = 99
+  hourcount = 22
+  tempstep = -1
 
   headline = "Meteogram for " + location
   if location.isdigit():
@@ -54,7 +55,7 @@ def get_pyyrascii (location):
     "S":" S", "SSW":"SW", "SW":"SW", "WSW":"SW", \
     "W":" W", "WNW":"NW", "NW":"NW", "NNW":"NW"}
 
-  #collect temps
+  #collect temps from xml, 
   for item in weatherdata['tabular'][:hourcount]:
     if int(item['temperature']) > temphigh:
       temphigh = int(item['temperature'])
@@ -64,18 +65,23 @@ def get_pyyrascii (location):
       templow = int(item['temperature'])
       #print "l" + item['temperature']
 
-  #create temp range
-  #print "high",temphigh
-  #print "low",templow
+  print "high",temphigh,"low",templow
+
+  #scale y-axis. default = -1
+  if tempheight < (temphigh - templow):
+    tempstep = -2
+    print "Upped timestep"
+
+  #create temp range print "low",templow
   if temphigh == templow:
     templow = temphigh-1
 
   temps=[]
-  for t in range(int(temphigh), int(templow), -1):
+  for t in range(int(temphigh), int(templow), tempstep):
     temps.append(t)
 
   #extend temp range
-  #print "temps",temps
+  print "temps",temps
   #temps = [ (temps[0] +1) ] + temps
   for t in range(0, tempheight):
     if len(temps)+1 < tempheight:
@@ -108,22 +114,33 @@ def get_pyyrascii (location):
     #create time range
     time.append(str(item['from'])[11:13])
 
-    #for each y look for matching temp
+    #for each y look for matching temp, draw graph
     for i in range(1, hourcount):
       if tempheight < i:
         continue
 
+      temptomatch = [ int(item['temperature'].strip()) ]
+      if tempstep < -1:
+        temptomatch.append(temptomatch[0] - 1)
+
       try:
-        if item['temperature'].strip() == graph[i][:3].strip():
-          if int(item['symbolnumber']) in [3,4,15]:
+        #print temptomatch
+        #print graph[i][:3]
+        #print temptomatch.index( int(graph[i][:3]) )
+
+        if temptomatch.index( int(graph[i][:3]) ):
+          print temptomatch, graph[i][:3].strip()
+          if int(item['symbolnumber']) in [3,4,15]: #parly
             graph[i] += "==="
-          elif int(item['symbolnumber']) in [5,6,7,8,9,10,11,12,13,14]:
+          elif int(item['symbolnumber']) in [5,6,7,8,9,10,11,12,13,14]: #clouded
             graph[i] += "###"
-          else:
+          else: #clear
             graph[i] += "---"
         else:
           graph[i] += "   "
       except KeyError:
+        pass
+      except ValueError: #temptomatch.index failed
         pass
 
   #  print item
