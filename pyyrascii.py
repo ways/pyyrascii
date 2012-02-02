@@ -29,10 +29,11 @@ def get_pyyrascii (location):
       "http://fil.nrk.no/yr/viktigestader/verda.txt" + ".\n"
 
 
+  verbose = False
   ret = "" #all output goes here
   graph=dict()
   graph[0] = " 'C"
-  tempheight = 5
+  tempheight = 11
   rainline = 13
   windline = 14
   timeline = 15
@@ -41,8 +42,8 @@ def get_pyyrascii (location):
   graph[timeline] = "   " #time
   temphigh = -99
   templow = 99
-  hourcount = 22
   tempstep = -1
+  hourcount = 22
 
   headline = "Meteogram for " + location
   if location.isdigit():
@@ -65,51 +66,64 @@ def get_pyyrascii (location):
       templow = int(item['temperature'])
       #print "l" + item['temperature']
 
-  print "high",temphigh,"low",templow
+  if verbose:
+    print "high",temphigh,"low",templow
 
   #scale y-axis. default = -1
   if tempheight < (temphigh - templow):
     tempstep = -2
-    print "Upped timestep"
+    if verbose:
+      print "Upped timestep"
 
-  #create temp range print "low",templow
   if temphigh == templow:
     templow = temphigh-1
 
   temps=[]
-  for t in range(int(temphigh), int(templow), tempstep):
+  #create temp range
+  for t in range(int(temphigh), int(templow)-1, tempstep):
     temps.append(t)
 
+  if verbose:
+    print "temps",temps
+
   #extend temp range
-  print "temps",temps
   #temps = [ (temps[0] +1) ] + temps
   for t in range(0, tempheight):
     if len(temps)+1 < tempheight:
-      if t%2 == 0:
-        temps.append( temps[len(temps)-1] -1 )
-      else:
-        temps = [ (temps[0] +1) ] + temps
+      if t%2 == 0: #extend down
+        temps.append( temps[len(temps)-1] - abs(tempstep) )
+      else: #extend up
+        temps = [ temps[0] + abs(tempstep) ] + temps
+  #temps.append( temps[len(temps)-1] -1 ) #TODO:remove me?
 
-  for i in range(1, tempheight):
+  if verbose:
+    print "temps",temps
+
+  #write temps to graph
+  for i in range(1, tempheight+abs(tempstep)):
+    #print i
     try:
       graph[i] = str(temps[i-1]).rjust(3, ' ')
     except KeyError as (errno, strerror):
       print "err ",i,errno,strerror
       pass
-    except IndexError: #list empty
+    except IndexError as err: #list empty
+      #print "err ",err
       pass
+
   #print "graph",graph
 
   time=[]
-  #create graph
+
+  #draw graph elements
   for item in weatherdata['tabular'][:hourcount]:
-    #create rain on y axis
+    #create rain on x axis
     graph[rainline] += " " + '%2.0f' % float(item['precipitation'])
-    #create wind on y axis
+    #create wind on x axis
     graph[windline] += " " + \
       (wind[ item['windDirection']['code'] ] \
       if 0 != item['windSpeed']['mps'] else " O")
-    #create time on y axis
+    #create time on x axis
     graph[timeline] += " " + str(item['from'])[11:13] #2012-01-17T21:00
     #create time range
     time.append(str(item['from'])[11:13])
@@ -117,19 +131,21 @@ def get_pyyrascii (location):
     #for each y look for matching temp, draw graph
     for i in range(1, hourcount):
       if tempheight < i:
-        continue
-
-      temptomatch = [ int(item['temperature'].strip()) ]
-      if tempstep < -1:
-        temptomatch.append(temptomatch[0] - 1)
+        break
 
       try:
-        #print temptomatch
-        #print graph[i][:3]
-        #print temptomatch.index( int(graph[i][:3]) )
+        #parse out numbers to be compared
+        temptomatch = [ int(item['temperature']) ]
+        tempingraph = int(graph[i][:3].strip())
 
-        if temptomatch.index( int(graph[i][:3]) ):
-          print temptomatch, graph[i][:3].strip()
+        if tempstep < -1: #TODO: this should scale higher than one step
+          temptomatch.append(temptomatch[0] - 1)
+
+        #print "temptomatch",temptomatch
+        #print "graph",tempingraph
+
+        if tempingraph in temptomatch:
+          #print temptomatch, graph[i][:3].strip()
           if int(item['symbolnumber']) in [3,4,15]: #parly
             graph[i] += "==="
           elif int(item['symbolnumber']) in [5,6,7,8,9,10,11,12,13,14]: #clouded
@@ -138,9 +154,8 @@ def get_pyyrascii (location):
             graph[i] += "---"
         else:
           graph[i] += "   "
-      except KeyError:
-        pass
-      except ValueError: #temptomatch.index failed
+      except KeyError as err:
+        #print err
         pass
 
   #  print item
