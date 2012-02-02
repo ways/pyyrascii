@@ -1,0 +1,28 @@
+Goal~
+
+  'C
+   4
+   3
+   2           /***-----___
+   1     ###--/            _______
+   0 -###
+  -1
+         _  -  =  #  _ _- -= =# ##  Rain ( _-=#)
+     NW  N NE  E SE  S SW  W  N  O  Wind direction
+     10 11 12 13 14 15 16 17 18 19  Time
+
+     ^\ ^| ^/ -> v\ v| v/ <- ^|  O  Wind direction
+
+     ^   ^  ^     \  |  /     ^     Wind direction
+      \  |  / ->  v  v  v <-  \  O  Wind direction
+
+     35 00 02 04 07 18 20 28 30  -  Wind angle (/10)
+      1  2  2  3  2  2  1  1  1  0  Wind strength
+
+      0  2  1  1  0  5  0  0  0  0  Rain (mm)
+     00 12 01 01 00 39 99  0  0  0  Rain (mm low, high)
+
+Legend:
+ ---                   ===                              ###
+ L Sunny, or scattered L Partly clouded, clouded or fog L Rain, snow, storm
+
