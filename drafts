@@ -18,6 +18,22 @@ Legend:   --- : Sunny   === : Clouded   ### : Rain/snow
 Weather forecast from yr.no, delivered by the Norwegian Meteorological Institute and the NRK.
 Source: Norge/postnummer/5003
 
+# finger toronto@graph.no
+                             Meteogram for toronto                              
+ 'C
+  8                                                                  
+  6                              ---                                 
+  4                                                                  
+  2      ===                        ===                              
+  0                     ---            ======            ---         
+ -2         ===---         ------                                 ###
+ -4---===                                    ---            ===###   
+ -6                  ===                          |   ---            
+ -8                 '                       |  |--|--+               
+-10              '--+  '                 |  |  |  |  |                 
+     0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  1  2 Rain (mm)
+    NW NW NW NE  N NW NW  W SW SW SW SW  W NW NW NW  W SW SW SW SE SE Wind dir.
+    01 07 13 19 01 07 13 19 01 07 13 19 01 07 13 19 01 07 13 19 01 07 Hour
 
 
   'C
