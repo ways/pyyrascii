@@ -30,21 +30,18 @@ def get_pyyrascii (location):
   graph=dict()
   graph[0] = " 'C"
   tempheight = 11
-  rainline = 13
+  timeline = 13
   windline = 14
-  timeline = 15
+  windstrline = 15
+  rainline = 16
   graph[rainline] = "   " #rain
   graph[windline] = "   " #wind
+  graph[windstrline] = "   " #wind strenght
   graph[timeline] = "   " #time
   temphigh = -99
   templow = 99
   tempstep = -1
   hourcount = 22
-
-  headline = "Meteogram for " + location
-  if location.isdigit():
-    headline += " for the next " + str(hourcount) + " hours."
-  ret += string.center(headline, 80) + "\n"
 
   wind={
     "N":" N", "NNE":"NE", "NE":"NE", "ENE":"NE", \
@@ -119,6 +116,8 @@ def get_pyyrascii (location):
     graph[windline] += " " + \
       (wind[ item['windDirection']['code'] ] \
       if 0 != item['windSpeed']['mps'] else " O")
+    #create wind strength on x axis
+    graph[windstrline] += " " + '%2.0f' % float(item['windSpeed']['mps'])
     #create time on x axis
     graph[timeline] += " " + str(item['from'])[11:13] #2012-01-17T21:00
     #create time range
@@ -158,9 +157,22 @@ def get_pyyrascii (location):
   #  break
 
   #Legends
-  graph[rainline] += " Rain (mm)"
-  graph[windline] += " Wind dir."
-  graph[timeline] += " Hour"
+  graph[rainline] +=    " Rain (mm)"
+  graph[windline] +=    " Wind dir."
+  graph[windstrline] += " Wind(mps)"
+  graph[timeline] +=    " Hour"
+
+  #header
+  headline = "-= Meteogram for " +\
+    str(source)\
+    .replace('http://www.yr.no/sted/', '')\
+    .replace('http://www.yr.no/place/', '')\
+    .replace('/forecast.xml','')\
+    .replace('/forecast_hour_by_hour.xml','')
+  if location.isdigit():
+    headline += " for the next " + str(hourcount) + " hours"
+  headline += " =-"
+  ret += string.center(headline, 80) + "\n"
 
   #print graph
   for g in graph.values():
@@ -168,14 +180,7 @@ def get_pyyrascii (location):
 
   ret += '\nLegend:   --- : Sunny   === : Clouded   ### : Rain/snow \n' +\
     'Weather forecast from yr.no, delivered by the Norwegian Meteorological ' +\
-    'Institute and the NRK.\n' +\
-    'Source: ' + \
-    str(source)\
-      .replace('http://www.yr.no/sted/', '')\
-      .replace('http://www.yr.no/place/', '')\
-      .replace('/forecast.xml','')\
-      .replace('/forecast_hour_by_hour.xml','') + \
-    "\n"
+    'Institute and the NRK.\n'
 
   return ret
 
