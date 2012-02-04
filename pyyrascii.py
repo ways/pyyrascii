@@ -23,11 +23,7 @@ def get_pyyrascii (location):
   weatherdata, source = pyyrlib.returnWeatherData(location, True)
 
   if not weatherdata:
-    return "Error; no weather data for selected location " + location + ".\n" +\
-      "Attempt a norwegian post code (4 digits), an international city or " +\
-      "empty. International names comes from " +\
-      "http://fil.nrk.no/yr/viktigestader/verda.txt" + ".\n"
-
+    return False
 
   verbose = False
   ret = "" #all output goes here
