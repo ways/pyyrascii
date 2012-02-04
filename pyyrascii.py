@@ -19,6 +19,14 @@ import SocketServer, subprocess, re, sys, string
 import pyyrlib # https://github.com/ways/pyyrlib
 import pyofc # https://github.com/ways/pyofflinefilecache
 
+def wind_symbols():
+  return = {
+    "N":" N", "NNE":"NE", "NE":"NE", "ENE":"NE", \
+    "E":" E", "ESE":"SE", "SE":"SE", "SSE":"SE", \
+    "S":" S", "SSW":"SW", "SW":"SW", "WSW":"SW", \
+    "W":" W", "WNW":"NW", "NW":"NW", "NNW":"NW"}
+
+
 def get_pyyrascii (location):
   weatherdata, source = pyyrlib.returnWeatherData(location, True)
 
@@ -28,7 +36,6 @@ def get_pyyrascii (location):
   verbose = False
   ret = "" #all output goes here
   graph=dict()
-  graph[0] = " 'C"
   tempheight = 11
   timeline = 13
   windline = 14
@@ -42,12 +49,11 @@ def get_pyyrascii (location):
   templow = 99
   tempstep = -1
   hourcount = 22
-
-  wind={
-    "N":" N", "NNE":"NE", "NE":"NE", "ENE":"NE", \
-    "E":" E", "ESE":"SE", "SE":"SE", "SSE":"SE", \
-    "S":" S", "SSW":"SW", "SW":"SW", "WSW":"SW", \
-    "W":" W", "WNW":"NW", "NW":"NW", "NNW":"NW"}
+  screenwidth = 80
+  #rain in graph:
+  rainheigth = 5
+  rainscale = 1
+  wind = wind_symbols()
 
   #collect temps from xml, 
   for item in weatherdata['tabular'][:hourcount]:
@@ -157,6 +163,7 @@ def get_pyyrascii (location):
   #  break
 
   #Legends
+  graph[0] = " 'C" + string.rjust('Rain (mm) ', screenwidth-3)
   graph[rainline] +=    " Rain (mm)"
   graph[windline] +=    " Wind dir."
   graph[windstrline] += " Wind(mps)"
@@ -172,7 +179,7 @@ def get_pyyrascii (location):
   if location.isdigit():
     headline += " for the next " + str(hourcount) + " hours"
   headline += " =-"
-  ret += string.center(headline, 80) + "\n"
+  ret += string.center(headline, screenwidth) + "\n"
 
   #print graph
   for g in graph.values():
