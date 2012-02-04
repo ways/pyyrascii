@@ -1,22 +1,24 @@
-                   Meteogram for 5003 for the next 22 hours.
+       -= Meteogram for Norge/postnummer/5003 for the next 22 hours. =-
  'C                                                                   Rain (mm)
   5
   4
   3######
   2      ###
   1         ###
-  0            ######                                      |           5 mm
- -1                  ######==================###===========+=========  4 mm
- -2                                                        |           3 mm
- -3     |  |                                               |           2 mm
- -4     |  |  |                                            |  |        1 mm
-     2  2  2  2  2  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 Wind mps
-    SE  S SE SE SE SE SE  S  S  S  S  S  S  S  S  S  S  S SE  S  S SE Wind dir.
+  0            ######                                      |             5 mm
+ -1                  ######==================###===========+=========    4 mm
+ -2                                                        |             3 mm
+ -3     |  |                                               |             2 mm
+ -4     |  |  |                                            |  |          1 mm
     00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 Hour
 
-Legend:   --- : Sunny   === : Clouded   ### : Rain/snow
+     2  2  2  2  2  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 Wind mps
+    SE  S SE SE SE SE SE  S  S  S  S  S  S  S  S  S  S  S SE  S  S SE Wind dir.
+
+Legend:      --- Sunny      === Clouded      ### Rain/snow
 Weather forecast from yr.no, delivered by the Norwegian Meteorological Institute and the NRK.
-Source: Norge/postnummer/5003
+
+
 
 # finger toronto@graph.no
                              Meteogram for toronto                              
