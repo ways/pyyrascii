@@ -10,7 +10,7 @@ PyYrAscii is a simple python grapher for using Yr.no’s weather data API.
 You are welcome to participate in this project!
 """
 
-__version__ = '0.3'
+__version__ = '0.4'
 __url__ = 'https://github.com/ways/pyyrascii'
 __license__ = 'GPL License'
 __docformat__ = 'markdown'
@@ -20,7 +20,7 @@ import pyyrlib # https://github.com/ways/pyyrlib
 import pyofc # https://github.com/ways/pyofflinefilecache
 
 def wind_symbols():
-  return = {
+  return {
     "N":" N", "NNE":"NE", "NE":"NE", "ENE":"NE", \
     "E":" E", "ESE":"SE", "SE":"SE", "SSE":"SE", \
     "S":" S", "SSW":"SW", "SW":"SW", "WSW":"SW", \
@@ -51,11 +51,12 @@ def get_pyyrascii (location):
   hourcount = 22
   screenwidth = 80
   #rain in graph:
-  rainheigth = 5
-  rainscale = 1
+  rainheigth = 6
+  rainstep = -1
+  rainhigh = 0
   wind = wind_symbols()
 
-  #collect temps from xml, 
+  #collect temps, rain from xml
   for item in weatherdata['tabular'][:hourcount]:
     if int(item['temperature']) > temphigh:
       temphigh = int(item['temperature'])
@@ -65,14 +66,20 @@ def get_pyyrascii (location):
       templow = int(item['temperature'])
       #print "l" + item['temperature']
 
+    if float(item['precipitation']) > rainhigh:
+      rainhigh = float(item['precipitation'])
+
   if verbose:
-    print "high",temphigh,"low",templow
+    print "high",temphigh,"low",templow,"rainhigh",rainhigh
 
   #scale y-axis. default = -1
   if tempheight < (temphigh - templow):
     tempstep = -2
     if verbose:
       print "Upped timestep"
+
+  #scale rain-axis
+  #TODO
 
   if temphigh == templow:
     templow = temphigh-1
@@ -112,9 +119,16 @@ def get_pyyrascii (location):
 
   #print "graph",graph
 
-  time=[]
+  #write rainaxis to graph
+  rain = []
+  for r in range(1, rainheigth, abs(rainstep)):
+    rain.insert(r, '%2.0f mm ' % r)
 
-  #draw graph elements
+  print "rain axis",str(rain)
+
+  #draw graph elements:
+  time=[]
+  #for each x (time)
   for item in weatherdata['tabular'][:hourcount]:
     #create rain on x axis
     graph[rainline] += " " + '%2.0f' % float(item['precipitation'])
@@ -129,11 +143,12 @@ def get_pyyrascii (location):
     #create time range
     time.append(str(item['from'])[11:13])
 
-    #for each y look for matching temp, draw graph
+    #for each y (temp) look for matching temp, draw graph
     for i in range(1, hourcount):
       if tempheight < i:
         break
 
+      #draw temp
       try:
         #parse out numbers to be compared
         temptomatch = [ int(item['temperature']) ]
@@ -157,6 +172,17 @@ def get_pyyrascii (location):
           graph[i] += "   "
       except KeyError as err:
         #print err
+        pass
+
+      #draw rain
+      try:
+        #print "rain" + str(tempheight-i)
+        #print rain[tempheight-i][:2]
+        #if float(rain[tempheight-i][:2]) == float(item['precipitation']):
+        #  print "rain" + item['precipitation']
+        #'%2.0f' % float(item['precipitation'])
+        pass
+      except IndexError as e:
         pass
 
   #  print item
