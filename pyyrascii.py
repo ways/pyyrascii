@@ -15,7 +15,7 @@ __url__ = 'https://github.com/ways/pyyrascii'
 __license__ = 'GPL License'
 __docformat__ = 'markdown'
 
-import SocketServer, subprocess, re, sys, string
+import SocketServer, subprocess, re, sys, string, math
 import pyyrlib # https://github.com/ways/pyyrlib
 import pyofc # https://github.com/ways/pyofflinefilecache
 
@@ -111,7 +111,7 @@ def get_pyyrascii (location):
   #draw graph elements
   for item in weatherdata['tabular'][:hourcount]:
     #create rain on x axis
-    graph[rainline] += " " + '%2.0f' % float(item['precipitation'])
+    graph[rainline] += " " + '%2.0f' % math.ceil(float(item['precipitation']))
     #create wind on x axis
     graph[windline] += " " + \
       (wind[ item['windDirection']['code'] ] \
