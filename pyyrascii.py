@@ -33,7 +33,7 @@ def get_pyyrascii (location):
   if not weatherdata:
     return False
 
-  verbose = False
+  verbose = True
   ret = "" #all output goes here
   graph=dict()
   tempheight = 11
@@ -119,13 +119,14 @@ def get_pyyrascii (location):
 
   #print "graph",graph
 
-  #write rainaxis to graph
-  rain = []
-  for r in range(1, rainheigth, abs(rainstep)):
-    rain.insert(r, '%2.0f mm ' % r)
+  #create rainaxis
+  #TODO: make this scale
+  rainaxis = []
+  for r in range(5, 0, rainstep):
+    rainaxis.append('%2.0f mm ' % r)
 
   if verbose:
-    print "rain axis",str(rain)
+    print "rain axis",str(rainaxis)
 
   #draw graph elements:
   time=[]
@@ -175,7 +176,7 @@ def get_pyyrascii (location):
   #draw rain
   for i in range(1, tempheight):
     try:
-      graph[i] += rain[i]
+#      graph[i] += rain[i]
         #print "rain" + str(tempheight-i)
         #print rain[tempheight-i][:2]
         #if float(rain[tempheight-i][:2]) == float(item['precipitation']):
@@ -207,16 +208,16 @@ def get_pyyrascii (location):
   headline += " =-"
   ret += string.center(headline, screenwidth) + "\n"
 
-  #print graph
-  for i in range(0, len(graph)):
+  #add rain to graph
+  for i in range(6, tempheight):
     try:
-      ret += graph[i]
-      ret += rain[i]
-    except KeyError:
-      pass
+      graph[i] += rainaxis[i-6]
     except IndexError:
       pass
-    ret += "\n"
+
+  #print graph
+  for g in graph.values():
+    ret += g + "\n"
 
   ret += '\nLegend:      --- Sunny      === Clouded      ### Rain/snow \n' +\
     'Weather forecast from yr.no, delivered by the Norwegian Meteorological ' +\
