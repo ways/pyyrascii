@@ -124,7 +124,8 @@ def get_pyyrascii (location):
   for r in range(1, rainheigth, abs(rainstep)):
     rain.insert(r, '%2.0f mm ' % r)
 
-  print "rain axis",str(rain)
+  if verbose:
+    print "rain axis",str(rain)
 
   #draw graph elements:
   time=[]
@@ -144,10 +145,7 @@ def get_pyyrascii (location):
     time.append(str(item['from'])[11:13])
 
     #for each y (temp) look for matching temp, draw graph
-    for i in range(1, hourcount):
-      if tempheight < i:
-        break
-
+    for i in range(1, tempheight):
       #draw temp
       try:
         #parse out numbers to be compared
@@ -174,16 +172,18 @@ def get_pyyrascii (location):
         #print err
         pass
 
-      #draw rain
-      try:
+  #draw rain
+  for i in range(1, tempheight):
+    try:
+      graph[i] += rain[i]
         #print "rain" + str(tempheight-i)
         #print rain[tempheight-i][:2]
         #if float(rain[tempheight-i][:2]) == float(item['precipitation']):
         #  print "rain" + item['precipitation']
         #'%2.0f' % float(item['precipitation'])
-        pass
-      except IndexError as e:
-        pass
+      pass
+    except IndexError as e:
+      pass
 
   #  print item
   #  break
@@ -208,10 +208,17 @@ def get_pyyrascii (location):
   ret += string.center(headline, screenwidth) + "\n"
 
   #print graph
-  for g in graph.values():
-    ret += g + "\n"
+  for i in range(0, len(graph)):
+    try:
+      ret += graph[i]
+      ret += rain[i]
+    except KeyError:
+      pass
+    except IndexError:
+      pass
+    ret += "\n"
 
-  ret += '\nLegend:   --- : Sunny   === : Clouded   ### : Rain/snow \n' +\
+  ret += '\nLegend:      --- Sunny      === Clouded      ### Rain/snow \n' +\
     'Weather forecast from yr.no, delivered by the Norwegian Meteorological ' +\
     'Institute and the NRK.\n'
 
