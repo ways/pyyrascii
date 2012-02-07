@@ -10,12 +10,11 @@ PyYrAscii is a simple python grapher for using Yr.no’s weather data API.
 You are welcome to participate in this project!
 """
 
-__version__ = '0.4'
+__version__ = '0.5'
 __url__ = 'https://github.com/ways/pyyrascii'
 __license__ = 'GPL License'
-__docformat__ = 'markdown'
 
-import SocketServer, subprocess, re, sys, string
+import SocketServer, subprocess, re, sys, string, math
 import pyyrlib # https://github.com/ways/pyyrlib
 import pyofc # https://github.com/ways/pyofflinefilecache
 
@@ -33,7 +32,7 @@ def get_pyyrascii (location):
   if not weatherdata:
     return False
 
-  verbose = True
+  verbose = False
   ret = "" #all output goes here
   graph=dict()
   tempheight = 11
@@ -132,8 +131,9 @@ def get_pyyrascii (location):
   time=[]
   #for each x (time)
   for item in weatherdata['tabular'][:hourcount]:
+    rain = math.ceil(float(item['precipitation']))
     #create rain on x axis
-    graph[rainline] += " " + '%2.0f' % float(item['precipitation'])
+    graph[rainline] += " " + '%2.0f' % rain
     #create wind on x axis
     graph[windline] += " " + \
       (wind[ item['windDirection']['code'] ] \
@@ -170,21 +170,13 @@ def get_pyyrascii (location):
         else:
           graph[i] += "   "
       except KeyError as err:
-        #print err
-        pass
+        continue
 
-  #draw rain
-  for i in range(1, tempheight):
-    try:
-#      graph[i] += rain[i]
-        #print "rain" + str(tempheight-i)
-        #print rain[tempheight-i][:2]
-        #if float(rain[tempheight-i][:2]) == float(item['precipitation']):
-        #  print "rain" + item['precipitation']
-        #'%2.0f' % float(item['precipitation'])
-      pass
-    except IndexError as e:
-      pass
+      #compare rain, and print
+      #TODO: scaling
+      if (rain != 0) and (rain > 10-i):
+        graph[i] = graph[i][:-1] + "|"
+        #print "Rain " + str(math.trunc(rain)) + " " + str(10-i)
 
   #  print item
   #  break
