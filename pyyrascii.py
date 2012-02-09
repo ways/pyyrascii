@@ -10,14 +10,21 @@ PyYrAscii is a simple python grapher for using Yr.no’s weather data API.
 You are welcome to participate in this project!
 """
 
-__version__ = '0.3'
+__version__ = '0.5'
 __url__ = 'https://github.com/ways/pyyrascii'
 __license__ = 'GPL License'
-__docformat__ = 'markdown'
 
 import SocketServer, subprocess, re, sys, string, math
 import pyyrlib # https://github.com/ways/pyyrlib
 import pyofc # https://github.com/ways/pyofflinefilecache
+
+def wind_symbols():
+  return {
+    "N":" N", "NNE":"NE", "NE":"NE", "ENE":"NE", \
+    "E":" E", "ESE":"SE", "SE":"SE", "SSE":"SE", \
+    "S":" S", "SSW":"SW", "SW":"SW", "WSW":"SW", \
+    "W":" W", "WNW":"NW", "NW":"NW", "NNW":"NW"}
+
 
 def get_pyyrascii (location):
   weatherdata, source = pyyrlib.returnWeatherData(location, True)
@@ -28,7 +35,6 @@ def get_pyyrascii (location):
   verbose = False
   ret = "" #all output goes here
   graph=dict()
-  graph[0] = " 'C"
   tempheight = 11
   timeline = 13
   windline = 14
@@ -42,14 +48,14 @@ def get_pyyrascii (location):
   templow = 99
   tempstep = -1
   hourcount = 22
+  screenwidth = 80
+  #rain in graph:
+  rainheigth = 6
+  rainstep = -1
+  rainhigh = 0
+  wind = wind_symbols()
 
-  wind={
-    "N":" N", "NNE":"NE", "NE":"NE", "ENE":"NE", \
-    "E":" E", "ESE":"SE", "SE":"SE", "SSE":"SE", \
-    "S":" S", "SSW":"SW", "SW":"SW", "WSW":"SW", \
-    "W":" W", "WNW":"NW", "NW":"NW", "NNW":"NW"}
-
-  #collect temps from xml, 
+  #collect temps, rain from xml
   for item in weatherdata['tabular'][:hourcount]:
     if int(item['temperature']) > temphigh:
       temphigh = int(item['temperature'])
@@ -59,14 +65,20 @@ def get_pyyrascii (location):
       templow = int(item['temperature'])
       #print "l" + item['temperature']
 
+    if float(item['precipitation']) > rainhigh:
+      rainhigh = float(item['precipitation'])
+
   if verbose:
-    print "high",temphigh,"low",templow
+    print "high",temphigh,"low",templow,"rainhigh",rainhigh
 
   #scale y-axis. default = -1
   if tempheight < (temphigh - templow):
     tempstep = -2
     if verbose:
       print "Upped timestep"
+
+  #scale rain-axis
+  #TODO
 
   if temphigh == templow:
     templow = temphigh-1
@@ -106,12 +118,22 @@ def get_pyyrascii (location):
 
   #print "graph",graph
 
-  time=[]
+  #create rainaxis
+  #TODO: make this scale
+  rainaxis = []
+  for r in range(5, 0, rainstep):
+    rainaxis.append('%2.0f mm ' % r)
 
-  #draw graph elements
+  if verbose:
+    print "rain axis",str(rainaxis)
+
+  #draw graph elements:
+  time=[]
+  #for each x (time)
   for item in weatherdata['tabular'][:hourcount]:
+    rain = math.ceil(float(item['precipitation']))
     #create rain on x axis
-    graph[rainline] += " " + '%2.0f' % math.ceil(float(item['precipitation']))
+    graph[rainline] += " " + '%2.0f' % rain
     #create wind on x axis
     graph[windline] += " " + \
       (wind[ item['windDirection']['code'] ] \
@@ -123,11 +145,9 @@ def get_pyyrascii (location):
     #create time range
     time.append(str(item['from'])[11:13])
 
-    #for each y look for matching temp, draw graph
-    for i in range(1, hourcount):
-      if tempheight < i:
-        break
-
+    #for each y (temp) look for matching temp, draw graph
+    for i in range(1, tempheight):
+      #draw temp
       try:
         #parse out numbers to be compared
         temptomatch = [ int(item['temperature']) ]
@@ -150,13 +170,19 @@ def get_pyyrascii (location):
         else:
           graph[i] += "   "
       except KeyError as err:
-        #print err
-        pass
+        continue
+
+      #compare rain, and print
+      #TODO: scaling
+      if (rain != 0) and (rain > 10-i):
+        graph[i] = graph[i][:-1] + "|"
+        #print "Rain " + str(math.trunc(rain)) + " " + str(10-i)
 
   #  print item
   #  break
 
   #Legends
+  graph[0] = " 'C" + string.rjust('Rain (mm) ', screenwidth-3)
   graph[rainline] +=    " Rain (mm)"
   graph[windline] +=    " Wind dir."
   graph[windstrline] += " Wind(mps)"
@@ -172,14 +198,21 @@ def get_pyyrascii (location):
   if location.isdigit():
     headline += " for the next " + str(hourcount) + " hours"
   headline += " =-"
-  ret += string.center(headline, 80) + "\n"
+  ret += string.center(headline, screenwidth) + "\n"
+
+  #add rain to graph
+  for i in range(6, tempheight):
+    try:
+      graph[i] += rainaxis[i-6]
+    except IndexError:
+      pass
 
   #print graph
   for g in graph.values():
     ret += g + "\n"
 
   ret += '\nLegend:      --- Sunny      === Clouded      ### Rain/snow \n' +\
-    'Weather forecast from http://yr.no, delivered by the Norwegian Meteorological ' +\
+    'Weather forecast from yr.no, delivered by the Norwegian Meteorological ' +\
     'Institute and the NRK.\n'
 
   return ret
