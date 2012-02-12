@@ -65,8 +65,8 @@ def get_pyyrascii (location):
       templow = int(item['temperature'])
       #print "l" + item['temperature']
 
-    if float(item['precipitation']) > rainhigh:
-      rainhigh = float(item['precipitation'])
+    if math.ceil(float(item['precipitation'])) > rainhigh:
+      rainhigh = math.ceil(float(item['precipitation']))
 
   if verbose:
     print "high",temphigh,"low",templow,"rainhigh",rainhigh
@@ -122,7 +122,10 @@ def get_pyyrascii (location):
   #TODO: make this scale
   rainaxis = []
   for r in range(5, 0, rainstep):
-    rainaxis.append('%2.0f mm ' % r)
+    if r <= rainhigh:
+      rainaxis.append('%2.0f mm ' % r)
+    else:
+      rainaxis.append(' ')
 
   if verbose:
     print "rain axis",str(rainaxis)
