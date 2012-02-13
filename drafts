@@ -16,7 +16,7 @@
     11 10  9  9 10  9 11 11 10 10  9 10 11 10 12 12 12 11 11 12 12 12 Wind(mps)
      1  1  0  1  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 Rain (mm)
 
-Legend:      --- Sunny      === Clouded      ### Rain/snow
+Legend:     --- Sunny     === Clouded     ### Rain/snow     | Rain (right axis)
 Weather forecast from yr.no, delivered by the Norwegian Meteorological Institute and the NRK.
 
 line 22 (-1 for 80 w)
