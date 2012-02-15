@@ -30,7 +30,7 @@ def get_pyyrascii (location):
   weatherdata, source = pyyrlib.returnWeatherData(location, True)
 
   if not weatherdata:
-    return False
+    return False, False
 
   verbose = False
   ret = "" #all output goes here
@@ -218,7 +218,7 @@ def get_pyyrascii (location):
     'Weather forecast from yr.no, delivered by the Norwegian Meteorological ' +\
     'Institute and the NRK.\n'
 
-  return ret
+  return ret, source
 
 
 if __name__ == "__main__":
@@ -228,5 +228,6 @@ if __name__ == "__main__":
   else:
     location = ''.join(sys.argv[1:])
 
-  print get_pyyrascii(location)
+  ret, source = get_pyyrascii(location)
+  print ret
   sys.exit(0)
