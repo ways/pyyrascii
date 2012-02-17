@@ -37,13 +37,14 @@ def get_pyyrascii (location):
   graph=dict()
   tempheight = 11
   timeline = 13
-  windline = 14
-  windstrline = 15
-  rainline = 16
+  windline = 15
+  windstrline = 16
+  rainline = 17
+  graph[timeline] = "   " #time
+  graph[timeline+1] = " " #spacer
   graph[rainline] = "   " #rain
   graph[windline] = "   " #wind
   graph[windstrline] = "   " #wind strenght
-  graph[timeline] = "   " #time
   temphigh = -99
   templow = 99
   tempstep = -1
@@ -186,7 +187,7 @@ def get_pyyrascii (location):
 
   #Legends
   graph[0] = " 'C" + string.rjust('Rain (mm) ', screenwidth-3)
-  graph[rainline] +=    " Rain (mm)"
+  graph[rainline] +=   " Rain (mm)"
   graph[windline] +=    " Wind dir."
   graph[windstrline] += " Wind(mps)"
   graph[timeline] +=    " Hour"
@@ -214,7 +215,8 @@ def get_pyyrascii (location):
   for g in graph.values():
     ret += g + "\n"
 
-  ret += '\nLegend:     --- Sunny     === Clouded     ### Rain/snow     | Rain (right axis)\n' +\
+  ret += '\nLegend left axis:     --- Sunny     === Clouded     ### Rain/snow' +\
+    '\nLegend right axis:      | Rain \n' +\
     'Weather forecast from yr.no, delivered by the Norwegian Meteorological ' +\
     'Institute and the NRK.\n'
 
