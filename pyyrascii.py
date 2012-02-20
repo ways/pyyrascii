@@ -51,7 +51,7 @@ def get_pyyrascii (location):
   hourcount = 22
   screenwidth = 80
   #rain in graph:
-  rainheigth = 6
+  rainheight = 10
   rainstep = -1
   rainhigh = 0
   wind = wind_symbols()
@@ -122,7 +122,7 @@ def get_pyyrascii (location):
   #create rainaxis
   #TODO: make this scale
   rainaxis = []
-  for r in range(5, 0, rainstep):
+  for r in range(10, 0, rainstep):
     if r <= rainhigh:
       rainaxis.append('%2.0f mm ' % r)
     else:
@@ -208,9 +208,9 @@ def get_pyyrascii (location):
   ret += string.center(headline, screenwidth) + "\n"
 
   #add rain to graph
-  for i in range(6, tempheight):
+  for i in range(1, tempheight):
     try:
-      graph[i] += rainaxis[i-6]
+      graph[i] += rainaxis[i-1]
     except IndexError:
       pass
 
