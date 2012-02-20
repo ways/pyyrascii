@@ -33,9 +33,10 @@ def get_pyyrascii (location):
     return False, False
 
   verbose = False
+  #verbose = True
   ret = "" #all output goes here
   graph=dict()
-  tempheight = 11
+  tempheight = 10+1
   timeline = 13
   windline = 15
   windstrline = 16
@@ -106,7 +107,7 @@ def get_pyyrascii (location):
     print "temps",temps
 
   #write temps to graph
-  for i in range(1, tempheight+abs(tempstep)):
+  for i in range(1, tempheight):
     #print i
     try:
       graph[i] = str(temps[i-1]).rjust(3, ' ')
