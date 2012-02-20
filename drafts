@@ -5,20 +5,20 @@
   3######
   2      ###
   1         ###
-  0            ######                                      |             5 mm
- -1                  ######==================###===========+=========    4 mm
- -2                                                        |             3 mm
- -3     |  |                                               |             2 mm
- -4     |  |  |                                            |  |          1 mm
+  0            ######                                      *             5 mm
+ -1                  ######==================###===========*=========    4 mm
+ -2                                                        *             3 mm
+ -3     |  |                                               *             2 mm
+ -4     |  |  |                                            *  *          1 mm
     21 22 23 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 Hour
 
      S  S  S  S SE SE SE SE SE SE SE  S  S SE SE SE SE SE SE SE SE SE Wind dir.
     11 10  9  9 10  9 11 11 10 10  9 10 11 10 12 12 12 11 11 12 12 12 Wind(mps)
      1  1  0  1  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 Rain (mm)
 
-Legend:     --- Sunny     === Clouded     ### Rain/snow     | Rain (right axis)
+Legend left axis:     --- Sunny     === Clouded     ### Rain/snow
+Legend right axis:      | Rain        * Snow
 Weather forecast from yr.no, delivered by the Norwegian Meteorological Institute and the NRK.
-
 line 22 (-1 for 80 w)
 
 
