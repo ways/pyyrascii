@@ -14,6 +14,7 @@ Requirements
 TODO
 ----
 
+* Change graph/rainbars (not both?) dependent on downpour being rain orsnow.
 * Icons/large weather-right-now display (not graph-related).
 * Add arguments to get weather in different format? Like i0458@graph.no to get an iconic view. w:0458 to get graph for a week. t:0458 to get text report.
 
