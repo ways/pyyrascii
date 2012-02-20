@@ -10,7 +10,7 @@ PyYrAscii is a simple python grapher for using Yr.no’s weather data API.
 You are welcome to participate in this project!
 """
 
-__version__ = '0.5'
+__version__ = '20120220'
 __url__ = 'https://github.com/ways/pyyrascii'
 __license__ = 'GPL License'
 
@@ -179,7 +179,10 @@ def get_pyyrascii (location):
       #compare rain, and print
       #TODO: scaling
       if (rain != 0) and (rain > 10-i):
-        graph[i] = graph[i][:-1] + "|"
+        rainsymbol = "|"
+        if 0 > int(item['temperature']):
+          rainsymbol = "*"
+        graph[i] = graph[i][:-1] + rainsymbol
         #print "Rain " + str(math.trunc(rain)) + " " + str(10-i)
 
   #  print item
@@ -215,8 +218,8 @@ def get_pyyrascii (location):
   for g in graph.values():
     ret += g + "\n"
 
-  ret += '\nLegend left axis:     --- Sunny     === Clouded     ### Rain/snow' +\
-    '\nLegend right axis:      | Rain \n' +\
+  ret += '\nLegend left axis:     --- Sunny     === Clouded     ### Precipitation' +\
+         '\nLegend right axis:      | Rain        * Snow \n' +\
     'Weather forecast from yr.no, delivered by the Norwegian Meteorological ' +\
     'Institute and the NRK.\n'
 
