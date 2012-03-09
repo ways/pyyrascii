@@ -10,7 +10,7 @@ PyYrAscii is a simple python grapher for using Yr.no’s weather data API.
 You are welcome to participate in this project!
 """
 
-__version__ = '20120220'
+__version__ = '20120310'
 __url__ = 'https://github.com/ways/pyyrascii'
 __license__ = 'GPL License'
 
@@ -166,11 +166,15 @@ def get_pyyrascii (location):
 
         if tempingraph in temptomatch:
           #print temptomatch, graph[i][:3].strip()
-          if int(item['symbolnumber']) in [3,4,15]: #parly
+          if int(item['symbolnumber']) in [3,4]: #parly
+            graph[i] += "~~~"
+          elif int(item['symbolnumber']) in [5,7,8,9,10,12,13]: #clouded
             graph[i] += "==="
-          elif int(item['symbolnumber']) in [5,6,7,8,9,10,11,12,13,14]: #clouded
+          elif int(item['symbolnumber']) in [6,11,14]: #lightning
+            graph[i] += "=/="
+          elif int(item['symbolnumber']) == 15: #fog
             graph[i] += "###"
-          else: #clear
+          else: #clear 1,2
             graph[i] += "---"
         else:
           graph[i] += "   "
@@ -180,10 +184,13 @@ def get_pyyrascii (location):
       #compare rain, and print
       #TODO: scaling
       if (rain != 0) and (rain > 10-i):
-        rainsymbol = "|"
-        if 0 > int(item['temperature']):
-          rainsymbol = "*"
-        graph[i] = graph[i][:-1] + rainsymbol
+        if int(item['symbolnumber']) in [5,6,9,10,11,14]:
+          rainsymbol = "  |"
+        elif int(item['symbolnumber']) in [7,12]:
+          rainsymbol = "  ¤"
+        elif int(item['symbolnumber']) in [8,13]:
+          rainsymbol = "  *"
+        graph[i] = graph[i][:-3] + rainsymbol
         #print "Rain " + str(math.trunc(rain)) + " " + str(10-i)
 
   #  print item
@@ -219,8 +226,8 @@ def get_pyyrascii (location):
   for g in graph.values():
     ret += g + "\n"
 
-  ret += '\nLegend left axis:     --- Sunny     === Clouded     ### Precipitation' +\
-         '\nLegend right axis:      | Rain        * Snow \n' +\
+  ret += '\nLegend left axis:  - Sunny  ~ Scattered  = Clouded  =/= Lightning  # Fog' +\
+         '\nLegend right axis: | Rain   ¤ Sleet      * Snow \n' +\
     'Weather forecast from yr.no, delivered by the Norwegian Meteorological ' +\
     'Institute and the NRK.\n'
 

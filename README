@@ -16,7 +16,7 @@ TODO
 
 * Make rainbars scale of value is off the chart.
 * Icons/large weather-right-now display (not graph-related).
-* Add arguments to get weather in different format? Like i0458@graph.no to get an iconic view. w:0458 to get graph for a week. t:0458 to get text report.
+* Add arguments to get weather in different format? Like i:0458@graph.no to get an iconic view. w:0458 to get graph for a week. t:0458 to get text report.
 
 
 Result
