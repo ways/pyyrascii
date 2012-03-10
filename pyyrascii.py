@@ -193,7 +193,7 @@ def get_pyyrascii (location):
         if rain > 10 and i == 1:
           rainsymbol = '%2.0f' % rain
           graph[i] = graph[i][:-2] + rainsymbol
-        else
+        else:
           graph[i] = graph[i][:-1] + rainsymbol
         #print "Rain " + str(math.trunc(rain)) + " " + str(10-i)
 
