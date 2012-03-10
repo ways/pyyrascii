@@ -251,5 +251,5 @@ if __name__ == "__main__":
     location = ''.join(sys.argv[1:])
 
   ret, source = get_pyyrascii(location)
-  print ret
+  #print ret
   sys.exit(0)
