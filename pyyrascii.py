@@ -230,10 +230,10 @@ def get_pyyrascii (location):
   for g in graph.values():
     ret += g + "\n"
 
-  ret += '\nLegend left axis:  - Sunny  ~ Scattered  = Clouded  =/= Lightning  # Fog' +\
-         '\nLegend right axis: | Rain   ¤ Sleet      * Snow \n' +\
+  ret += '\nLegend left axis:   - Sunny   ~ Scattered   = Clouded   =/= Lightning   # Fog' +\
+         '\nLegend right axis:  | Rain    ¤ Sleet       * Snow \n' +\
     'Weather forecast from yr.no, delivered by the Norwegian Meteorological ' +\
-    'Institute and the NRK.'
+    'Institute and the NRK. Try "finger @graph.no" for more info.'
 
   return ret, source
 
