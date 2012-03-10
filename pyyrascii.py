@@ -185,12 +185,17 @@ def get_pyyrascii (location):
       #TODO: scaling
       if (rain != 0) and (rain > 10-i):
         if int(item['symbolnumber']) in [5,6,9,10,11,14]:
-          rainsymbol = "  |"
+          rainsymbol = "|"
         elif int(item['symbolnumber']) in [7,12]:
-          rainsymbol = "  ¤"
+          rainsymbol = "¤"
         elif int(item['symbolnumber']) in [8,13]:
-          rainsymbol = "  *"
-        graph[i] = graph[i][:-3] + rainsymbol
+          rainsymbol = "*"
+        if rain > 10:
+          rainsymbol = "^"
+        try:
+          graph[i] = graph[i][:-1] + rainsymbol
+        except UnboundLocalError:
+          pass
         #print "Rain " + str(math.trunc(rain)) + " " + str(10-i)
 
   #  print item
