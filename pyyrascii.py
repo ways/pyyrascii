@@ -184,17 +184,22 @@ def get_pyyrascii (location):
       #compare rain, and print
       #TODO: scaling
       if (rain != 0) and (rain > 10-i):
-        if int(item['symbolnumber']) in [5,6,9,10,11,14]:
-          rainsymbol = "|"
-        elif int(item['symbolnumber']) in [7,12]:
+        if int(item['symbolnumber']) in [7,12]:
           rainsymbol = "¤"
         elif int(item['symbolnumber']) in [8,13]:
           rainsymbol = "*"
+        else: #if int(item['symbolnumber']) in [5,6,9,10,11,14]:
+          rainsymbol = "|"
+
+        #if overflow, print number at top
         if rain > 10 and i == 1:
           rainsymbol = '%2.0f' % rain
           graph[i] = graph[i][:-2] + rainsymbol
         else:
-          graph[i] = graph[i][:-1] + rainsymbol
+          try:
+            graph[i] = graph[i][:-1] + rainsymbol
+          except UnboundLocalError:
+            print "Err: " + str(item['symbolnumber'])
         #print "Rain " + str(math.trunc(rain)) + " " + str(10-i)
 
   #  print item
