@@ -14,9 +14,10 @@ Requirements
 TODO
 ----
 
-* Make rainbars scale of value is off the chart.
-* Icons/large weather-right-now display (not graph-related).
-* Add arguments to get weather in different format? Like i:0458@graph.no to get an iconic view. w:0458 to get graph for a week. t:0458 to get text report.
+* FEATURE: Make rainbars scale if value is off the chart.
+* BUG: Temperature sometimes runs of scale in not-hourly mode.
+* FEATURE: Icons/large weather-right-now display (not graph-related).
+* FEATURE: Add arguments to get weather in different format? Like i:0458@graph.no to get an iconic view. w:0458 to get graph for a week. t:0458 to get text report.
 
 
 Result
