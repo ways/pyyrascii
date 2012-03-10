@@ -43,7 +43,7 @@ def get_pyyrascii (location):
   rainline = 17
   graph[timeline] = "   " #time
   graph[timeline+1] = " " #spacer
-  graph[rainline] = "   " #rain
+  #graph[rainline] = "   " #rain
   graph[windline] = "   " #wind
   graph[windstrline] = "   " #wind strenght
   temphigh = -99
@@ -138,7 +138,7 @@ def get_pyyrascii (location):
   for item in weatherdata['tabular'][:hourcount]:
     rain = math.ceil(float(item['precipitation']))
     #create rain on x axis
-    graph[rainline] += " " + '%2.0f' % rain
+    #graph[rainline] += " " + '%2.0f' % rain
     #create wind on x axis
     graph[windline] += " " + \
       (wind[ item['windDirection']['code'] ] \
@@ -185,15 +185,15 @@ def get_pyyrascii (location):
       #TODO: scaling
       if (rain != 0) and (rain > 10-i):
         if int(item['symbolnumber']) in [5,6,9,10,11,14]:
-          rainsymbol = "|"
+          rainsymbol = " |"
         elif int(item['symbolnumber']) in [7,12]:
-          rainsymbol = "¤"
+          rainsymbol = " ¤"
         elif int(item['symbolnumber']) in [8,13]:
-          rainsymbol = "*"
-        if rain > 10:
-          rainsymbol = "^"
+          rainsymbol = " *"
+        if rain > 10 and i == 1:
+          rainsymbol = '%2.0f' % rain
         try:
-          graph[i] = graph[i][:-1] + rainsymbol
+          graph[i] = graph[i][:-2] + rainsymbol
         except UnboundLocalError:
           pass
         #print "Rain " + str(math.trunc(rain)) + " " + str(10-i)
@@ -203,7 +203,7 @@ def get_pyyrascii (location):
 
   #Legends
   graph[0] = " 'C" + string.rjust('Rain (mm) ', screenwidth-3)
-  graph[rainline] +=   " Rain (mm)"
+  #graph[rainline] +=   " Rain (mm)"
   graph[windline] +=    " Wind dir."
   graph[windstrline] += " Wind(mps)"
   graph[timeline] +=    " Hour"
