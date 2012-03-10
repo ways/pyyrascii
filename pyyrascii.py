@@ -74,10 +74,10 @@ def get_pyyrascii (location):
     print "high",temphigh,"low",templow,"rainhigh",rainhigh
 
   #scale y-axis. default = -1
-  if tempheight < (temphigh - templow):
+  if tempheight <= (temphigh - templow):
     tempstep = -2
     if verbose:
-      print "Upped timestep"
+      print "Upped tempstep"
 
   #scale rain-axis
   #TODO
@@ -251,5 +251,5 @@ if __name__ == "__main__":
     location = ''.join(sys.argv[1:])
 
   ret, source = get_pyyrascii(location)
-  #print ret
+  print ret
   sys.exit(0)
