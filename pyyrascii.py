@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: UTF-8; -*-
+# -*- coding: utf-8 -*-
 
 """
 PyYrAscii
@@ -10,7 +10,7 @@ PyYrAscii is a simple python grapher for using Yr.no’s weather data API.
 You are welcome to participate in this project!
 """
 
-__version__ = '20120315'
+__version__ = '20120316'
 __url__ = 'https://github.com/ways/pyyrascii'
 __license__ = 'GPL License'
 
@@ -251,5 +251,5 @@ if __name__ == "__main__":
     location = ''.join(sys.argv[1:])
 
   ret, source = get_pyyrascii(location)
-  print ret
+  #print ret
   sys.exit(0)
