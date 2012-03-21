@@ -191,6 +191,9 @@ def get_pyyrascii (location):
         else: #if int(item['symbolnumber']) in [5,6,9,10,11,14]:
           rainsymbol = "|"
 
+        if 0 > int(item['temperature']):
+          rainsymbol = "*"
+
         #if overflow, print number at top
         if rain > 10 and i == 1:
           rainsymbol = '%2.0f' % rain
@@ -251,5 +254,5 @@ if __name__ == "__main__":
     location = ''.join(sys.argv[1:])
 
   ret, source = get_pyyrascii(location)
-  #print ret
+  print ret
   sys.exit(0)
