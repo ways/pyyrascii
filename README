@@ -19,7 +19,13 @@ TODO
 * BUG: Temperature sometimes runs of scale in not-hourly mode.
 * FEATURE: Make rainbars scale if value is off the chart.
 * FEATURE: Icons/large weather-right-now display (not graph-related).
-* FEATURE: Add arguments to get weather in different format? Like i:0458@graph.no to get an iconic view. w:0458 to get graph for a week. t:0458 to get text report.
+* FEATURE: Add arguments to get weather in different format?
+** i:0458@graph.no to get an iconic view.
+*** "Fullscreen" or small?
+** w:0458 to get graph for a week.
+** t:0458 to get text report.
+** o:oslo to get a one-liner.
+*** Oslo at 18:00 @ 03.04.2012: 3'C, 3 mps NNW, precipitation: 0 mm.
 
 
 Result
