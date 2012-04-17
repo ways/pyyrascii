@@ -35,8 +35,22 @@ References
 * http://nrkbeta.no/2012/04/06/old-skool-vaervarsling/
 
 
-Result
-------
+Usage
+-----
+
+The service can be used in the following ways:
+* finger oslo@graph.no - norwegian city name
+* finger 0458@graph.no - norwegian postal code
+* finger newyork@graph.no - international city name. These are not hourly. Only data for every 6 hours available.
+* finger @graph.no - for more information
+
+If you don't have finger available, use:
+* echo oslo|nc graph.no 79
+* telnet graph.no 79 (and then type oslo)
+
+
+Example
+-------
 
 $ finger oslo@graph.no
                    -= Meteogram for norway/oslo/oslo/oslo =-                    
