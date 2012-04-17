@@ -73,3 +73,9 @@ $ finger oslo@graph.no
 Legend left axis:   - Sunny   ~ Scattered   = Clouded   =/= Lightning   # Fog
 Legend right axis:  | Rain    ! Sleet       * Snow 
 Weather forecast from yr.no, delivered by the Norwegian Meteorological Institute and the NRK. Try "finger @graph.no" for more info.
+
+
+Thanks
+------
+
+If you like the service, or want to report bugs, suggestions, etc, please drop me a line at finger@falk-petersen.no.
