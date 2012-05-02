@@ -61,7 +61,6 @@ TODO
 ----
 
 * BUG: Too tall for windows default window size.
-* BUG: Doesn't understand non-ascii characters from windows (æøå).
 * BUG: Temperature sometimes runs of scale in not-hourly mode.
 * FEATURE: Make rainbars scale if value is off the chart.
 * FEATURE: Icons/large weather-right-now display (not graph-related).
@@ -71,7 +70,7 @@ TODO
 ** w:0458 or =oslo@graph.no to get graph for a week.
 ** t:0458 or #oslo@graph.no to get text report.
 ** o:oslo or -oslo@graph.no to get a one-liner.
-*** Oslo at 18:00 @ 03.04.2012: 3'C, 3 mps NNW, precipitation: 0 mm.
+*** Weather Oslo 18:00: 3'C, 3 mps NNW, precipitation: 0 mm.
 * See https://github.com/ways/pyyrlib for TODOs in library.
 
 
