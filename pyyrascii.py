@@ -246,6 +246,42 @@ def get_pyyrascii (location):
   return ret, source
 
 
+def get_pyyrshort (location):
+  weatherdata, source = pyyrlib.returnWeatherData(location, True)
+
+  if not weatherdata:
+    return False, False
+
+  verbose = False
+  #verbose = True
+  ret = "" #all output goes here
+
+  if verbose:
+    print "weather"
+    print weatherdata['tabular'][0]
+    print weatherdata['tabular'][0]['temperature']
+    print weatherdata['tabular'][0]['precipitation']
+    print weatherdata['tabular'][0]['windSpeed']['mps']
+    print weatherdata['tabular'][0]['windDirection']['code']
+
+    ret += '%(location)s at %(from)s: %(temp)s C' % \
+      {"location": location, 
+      "from": weatherdata['tabular'][0]['from'][11:16],
+      "temp": str(weatherdata['tabular'][0]['temperature'])
+      }
+
+    if 0 < int(weatherdata['tabular'][0]['precipitation']):
+      ret += ', %(precipitation)d mm rain' % \
+        {"precipitation": math.ceil(float(weatherdata['tabular'][0]['precipitation']))}
+
+    if 0 < float(weatherdata['tabular'][0]['windSpeed']['mps']):
+      ret += ', %(speed)s mps wind from %(direction)s' % \
+        {"speed": str(weatherdata['tabular'][0]['windSpeed']['mps']),
+        "direction": weatherdata['tabular'][0]['windDirection']['code']}
+
+  return ret + ".", source
+
+
 if __name__ == "__main__":
   # Test if location is provided
   if sys.argv[1] == []:

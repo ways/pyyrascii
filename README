@@ -10,6 +10,7 @@ The service can be used in the following ways:
 * finger oslo@graph.no - norwegian city name
 * finger 0458@graph.no - norwegian postal code
 * finger newyork@graph.no - international city name. These are not hourly. Only data for every 6 hours available.
+* o:oslo to get a one-liner for use in screen, tmux, scripts.
 * finger @graph.no - for more information
 
 If you don't have finger available, use:
@@ -69,7 +70,6 @@ TODO
 *** "Fullscreen" or small?
 ** w:0458 or =oslo@graph.no to get graph for a week.
 ** t:0458 or #oslo@graph.no to get text report.
-** o:oslo or -oslo@graph.no to get a one-liner.
 *** Weather Oslo 18:00: 3'C, 3 mps NNW, precipitation: 0 mm.
 * See https://github.com/ways/pyyrlib for TODOs in library.
 
