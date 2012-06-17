@@ -10,7 +10,7 @@ PyYrAscii is a simple python grapher for using Yr.no’s weather data API.
 You are welcome to participate in this project!
 """
 
-__version__ = '20120316'
+__version__ = '20120617'
 __url__ = 'https://github.com/ways/pyyrascii'
 __license__ = 'GPL License'
 
@@ -264,22 +264,24 @@ def get_pyyrshort (location):
     print weatherdata['tabular'][0]['windSpeed']['mps']
     print weatherdata['tabular'][0]['windDirection']['code']
 
-    ret += '%(location)s at %(from)s: %(temp)s C' % \
-      {"location": location, 
-      "from": weatherdata['tabular'][0]['from'][11:16],
-      "temp": str(weatherdata['tabular'][0]['temperature'])
-      }
+  ret += '%(location)s at %(from)s: %(temp)s C' % \
+    {"location": location, 
+    "from": weatherdata['tabular'][0]['from'][11:16],
+    "temp": str(weatherdata['tabular'][0]['temperature'])
+    }
 
-    if 0 < int(weatherdata['tabular'][0]['precipitation']):
-      ret += ', %(precipitation)d mm rain' % \
-        {"precipitation": math.ceil(float(weatherdata['tabular'][0]['precipitation']))}
+  if 0 < float(weatherdata['tabular'][0]['precipitation']):
+    ret += ', %(precipitation)s mm rain' % \
+      {"precipitation": str(math.ceil(float(weatherdata['tabular'][0]['precipitation'])))}
 
-    if 0 < float(weatherdata['tabular'][0]['windSpeed']['mps']):
-      ret += ', %(speed)s mps wind from %(direction)s' % \
-        {"speed": str(weatherdata['tabular'][0]['windSpeed']['mps']),
-        "direction": weatherdata['tabular'][0]['windDirection']['code']}
+  if 0 < float(weatherdata['tabular'][0]['windSpeed']['mps']):
+    ret += ', %(speed)s mps wind from %(direction)s' % \
+      {"speed": str(weatherdata['tabular'][0]['windSpeed']['mps']),
+      "direction": weatherdata['tabular'][0]['windDirection']['code']}
 
-  return ret + ".", source
+  ret += "."
+
+  return ret, source
 
 
 if __name__ == "__main__":
