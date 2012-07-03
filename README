@@ -70,8 +70,6 @@ TODO
 ** i:0458@graph.no or *oslo@graph.no to get an iconic view.
 *** "Fullscreen" or small?
 ** w:0458 or =oslo@graph.no to get graph for a week.
-** t:0458 or #oslo@graph.no to get text report.
-*** Weather Oslo 18:00: 3'C, 3 mps NNW, precipitation: 0 mm.
 ** oslo+5@graph.no to get forecast from 5 hours from now.
 * FEATURE: Include warnings (obsforecast). Example:
 <forecast>
