@@ -137,12 +137,17 @@ def get_pyyrascii (location):
   #for each x (time)
   for item in weatherdata['tabular'][:hourcount]:
     rain = math.ceil(float(item['precipitation']))
+    try:
+      rainmax = math.ceil(float(item['precipitationmax']))
+    except KeyError:
+      rainmax = 0
+
     #create rain on x axis
     #graph[rainline] += " " + '%2.0f' % rain
     #create wind on x axis
     graph[windline] += " " + \
       (wind[ item['windDirection']['code'] ] \
-      if 0 != item['windSpeed']['mps'] else " O")
+      if 0.0 != float(item['windSpeed']['mps']) else " O")
     #create wind strength on x axis
     graph[windstrline] += " " + '%2.0f' % float(item['windSpeed']['mps'])
     #create time on x axis
@@ -184,14 +189,14 @@ def get_pyyrascii (location):
       #compare rain, and print
       #TODO: scaling
       if (rain != 0) and (rain > 10-i):
-        if int(item['symbolnumber']) in [7,12]:
+        if int(item['symbolnumber']) in [7,12]: #sleet
           rainsymbol = "!"
-        elif int(item['symbolnumber']) in [8,13]:
+        elif int(item['symbolnumber']) in [8,13]: #snow
           rainsymbol = "*"
-        else: #if int(item['symbolnumber']) in [5,6,9,10,11,14]:
+        else: #if int(item['symbolnumber']) in [5,6,9,10,11,14]: #rain
           rainsymbol = "|"
 
-        if 0 > int(item['temperature']):
+        if 0 > int(item['temperature']): #rain but cold
           rainsymbol = "*"
 
         #if overflow, print number at top
@@ -199,6 +204,15 @@ def get_pyyrascii (location):
           rainsymbol = '%2.0f' % rain
           graph[i] = graph[i][:-2] + rainsymbol
         else:
+          #print rainmax if larger than rain. so far we only up by one. TODO
+          if rainmax > rain:
+            #print "rainmax: ", rainmax,"i",i,"rain",rain
+            try:
+              graph[i-1] = graph[i-1][:-1] + "'"
+            except UnboundLocalError:
+              print "Err2: " + str(item['symbolnumber'])
+
+          #print rain
           try:
             graph[i] = graph[i][:-1] + rainsymbol
           except UnboundLocalError:
@@ -238,8 +252,8 @@ def get_pyyrascii (location):
   for g in graph.values():
     ret += g + "\n"
 
-  ret += '\nLegend left axis:   - Sunny   ~ Scattered   = Clouded   =/= Lightning   # Fog' +\
-         '\nLegend right axis:  | Rain    ! Sleet       * Snow \n' +\
+  ret += "\nLegend left axis:   - Sunny   ~ Scattered   = Clouded   / Lightning   # Fog" +\
+         "\nLegend right axis:  | Rain    ! Sleet       * Snow      ' Chance of more rain\n" +\
     'Weather forecast from yr.no, delivered by the Norwegian Meteorological ' +\
     'Institute and the NRK. Try "finger @graph.no" for more info.'
 
@@ -253,7 +267,7 @@ def get_pyyrshort (location):
     return False, False
 
   verbose = False
-  #verbose = True
+  verbose = True
   ret = "" #all output goes here
 
   if verbose:

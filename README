@@ -61,6 +61,7 @@ Requirements for installation (set up your own service)
 TODO
 ----
 
+* BUG: o: doesn't show full location name
 * BUG: Too tall for windows default window size.
 * BUG: Temperature sometimes runs of scale in not-hourly mode.
 * FEATURE: Make rainbars scale if value is off the chart.
@@ -71,12 +72,29 @@ TODO
 ** w:0458 or =oslo@graph.no to get graph for a week.
 ** t:0458 or #oslo@graph.no to get text report.
 *** Weather Oslo 18:00: 3'C, 3 mps NNW, precipitation: 0 mm.
+** oslo+5@graph.no to get forecast from 5 hours from now.
+* FEATURE: Include warnings (obsforecast). Example:
+<forecast>
+<text>
+<location name="Oslo">
+<time from="2012-06-28" to="2012-06-29" type="obsforecast">
+<title>Thursday and Friday</title>
+<body>
+<strong>Oslo:</strong> Fredag ettermiddag lokalt store nedbørsmengder.
+</body>
+</time>
+<time from="2012-06-29" to="2012-06-30">
+<title>Friday and Saturday</title>
+<body>
+<strong>Østlandet:</strong> Sørøstlig bris, kortvarig liten kuling i Ytre Oslofjord. Noen regnbyger. Fra i ettermiddag sørlig bris, sørvest frisk bris på kysten. Etter hvert skyet eller delvis skyet, stort sett oppholdsvær. I morgen sørlig bris. På kysten sørvest frisk bris som øker til liten kuling utpå dagen. Skiftende skydekke og enkelte regnbyger. Perioder med sol, særlig nær kysten.
+</body>
+
 * See https://github.com/ways/pyyrlib for TODOs in library.
 
 
-References
-----------
-* https://github.com/ways
-* http://www.reddit.com/r/linux/comments/ouday/retro_weather_forecast_finger/
-* http://nrkbeta.no/2012/04/06/old-skool-vaervarsling/
-
+Links and mentions
+------------------
+* Source - https://github.com/ways
+* Announced - http://www.reddit.com/r/linux/comments/ouday/retro_weather_forecast_finger/
+* News article - http://nrkbeta.no/2012/04/06/old-skool-vaervarsling/
+* LittlePrinter plugin - http://twitpic.com/a298vv
