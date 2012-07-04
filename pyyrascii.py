@@ -253,7 +253,7 @@ def get_pyyrascii (location):
     ret += g + "\n"
 
   ret += "\nLegend left axis:   - Sunny   ~ Scattered   = Clouded   / Lightning   # Fog" +\
-         "\nLegend right axis:  | Rain    ! Sleet       * Snow      ' Chance of more rain\n" +\
+         "\nLegend right axis:  | Rain    ! Sleet       * Snow      ' High uncertainty \n" +\
     'Weather forecast from yr.no, delivered by the Norwegian Meteorological ' +\
     'Institute and the NRK. Try "finger @graph.no" for more info.'
 
