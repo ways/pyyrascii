@@ -124,7 +124,7 @@ def get_pyyrascii (location):
   #TODO: make this scale
   rainaxis = []
   for r in range(10, 0, rainstep):
-    if r <= rainhigh:
+    if r <= rainhigh +1:
       rainaxis.append('%2.0f mm ' % r)
     else:
       rainaxis.append(' ')
