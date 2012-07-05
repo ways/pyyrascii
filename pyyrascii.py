@@ -18,6 +18,9 @@ import SocketServer, subprocess, re, sys, string, math
 import pyyrlib # https://github.com/ways/pyyrlib
 import pyofc # https://github.com/ways/pyofflinefilecache
 
+verbose = False
+#verbose = True
+
 def wind_symbols():
   return {
     "N":" N", "NNE":"NE", "NE":"NE", "ENE":"NE", \
@@ -32,8 +35,6 @@ def get_pyyrascii (location):
   if not weatherdata:
     return False, False
 
-  verbose = False
-  #verbose = True
   ret = "" #all output goes here
   graph=dict()
   tempheight = 10+1
@@ -266,8 +267,6 @@ def get_pyyrshort (location):
   if not weatherdata:
     return False, False
 
-  verbose = False
-  verbose = True
   ret = "" #all output goes here
 
   if verbose:
