@@ -13,9 +13,11 @@ The service can be used in the following ways:
 * o:oslo to get a one-liner for use in screen, tmux, scripts.
 * finger @graph.no - for more information
 
-If you don't have finger available, use:
-* echo oslo|nc graph.no 79
-* telnet graph.no 79 (and then type oslo)
+Availability:
+* Finger is supported on all major platforms (Windows, OS X, Linux, FreeBSD, Android, ...)
+* If you don't have finger available, but have some standard shell tools, try one of the following:
+** echo oslo|nc graph.no 79
+** telnet graph.no 79 (and then type oslo)
 
 
 Example
@@ -50,8 +52,8 @@ Thanks
 If you like the service, or want to report bugs, suggestions, etc, please drop me a line at finger@falk-petersen.no.
 
 
-Requirements for installation (set up your own service)
--------------------------------------------------------
+Requirements for installation (setting up your own service)
+-----------------------------------------------------------
 
 * Please checkout https://github.com/ways/pyyrlib to project directory.
 * Please checkout https://github.com/ways/pyofflinefilecache to project directory.
@@ -62,15 +64,13 @@ TODO
 ----
 
 * BUG: o: doesn't show full location name
-* BUG: Too tall for windows default window size.
+* BUG: May be too tall for windows default window size.
 * BUG: Temperature sometimes runs of scale in not-hourly mode.
 * FEATURE: Make rainbars scale if value is off the chart.
-* FEATURE: Icons/large weather-right-now display (not graph-related).
-* FEATURE: Add arguments to get weather in different format?
-** i:0458@graph.no or *oslo@graph.no to get an iconic view.
-*** "Fullscreen" or small?
-** w:0458 or =oslo@graph.no to get graph for a week.
-** oslo+5@graph.no to get forecast from 5 hours from now.
+* FEATURE: Add arguments to get weather in different format:
+** i:0458 to get an iconic view. ("Fullscreen" or small?)
+** w:0458 to get graph for a week instead of a day.
+** oslo+5 to get forecast from 5 hours from now.
 * FEATURE: Include warnings (obsforecast). Example:
 <forecast>
 <text>

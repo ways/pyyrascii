@@ -176,8 +176,14 @@ def get_pyyrascii (location):
             graph[i] += "~~~"
           elif int(item['symbolnumber']) in [5,7,8,9,10,12,13]: #clouded
             graph[i] += "==="
-          elif int(item['symbolnumber']) in [6,11,14]: #lightning
-            graph[i] += "=/="
+          elif int(item['symbolnumber']) in [6,11,14,22]: #lightning
+            graph[i] += "=V="
+          elif int(item['symbolnumber']) in [14,21]: #lightning and snow
+            graph[i] += "=<="
+          elif int(item['symbolnumber']) in [22]: #lightning and rain
+            graph[i] += "=<="
+          elif int(item['symbolnumber']) in [20,23]: #lightning and sleet
+            graph[i] += "=<!"
           elif int(item['symbolnumber']) == 15: #fog
             graph[i] += "###"
           else: #clear 1,2
@@ -253,8 +259,8 @@ def get_pyyrascii (location):
   for g in graph.values():
     ret += g + "\n"
 
-  ret += "\nLegend left axis:   - Sunny   ~ Scattered   = Clouded   / Lightning   # Fog" +\
-         "\nLegend right axis:  | Rain    ! Sleet       * Snow      ' High uncertainty \n" +\
+  ret += "\nLegend left axis:   - Sunny   ~ Scattered   = Clouded   =V= Lightning   # Fog" +\
+         "\nLegend right axis:  | Rain    ! Sleet       * Snow       '  High uncertainty \n" +\
     'Weather forecast from yr.no, delivered by the Norwegian Meteorological ' +\
     'Institute and the NRK. Try "finger @graph.no" for more info.'
 
