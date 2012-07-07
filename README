@@ -11,6 +11,7 @@ The service can be used in the following ways:
 * finger 0458@graph.no - norwegian postal code
 * finger newyork@graph.no - international city name. These are not hourly. Only data for every 6 hours available.
 * o:oslo to get a one-liner for use in screen, tmux, scripts.
+* finger <city name>+5@graph.no (forecast from 5 hours ahead in time, max:26)
 * finger @graph.no - for more information
 
 Availability:
@@ -70,7 +71,6 @@ TODO
 * FEATURE: Add arguments to get weather in different format:
 ** i:0458 to get an iconic view. ("Fullscreen" or small?)
 ** w:0458 to get graph for a week instead of a day.
-** oslo+5 to get forecast from 5 hours from now.
 * FEATURE: Include warnings (obsforecast). Example:
 <forecast>
 <text>

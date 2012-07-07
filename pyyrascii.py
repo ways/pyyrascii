@@ -10,7 +10,7 @@ PyYrAscii is a simple python grapher for using Yr.no’s weather data API.
 You are welcome to participate in this project!
 """
 
-__version__ = '20120617'
+__version__ = '20120708'
 __url__ = 'https://github.com/ways/pyyrascii'
 __license__ = 'GPL License'
 
@@ -29,11 +29,14 @@ def wind_symbols():
     "W":" W", "WNW":"NW", "NW":"NW", "NNW":"NW"}
 
 
-def get_pyyrascii (location):
+def get_pyyrascii (location, offset = 0):
   weatherdata, source = pyyrlib.returnWeatherData(location, True)
 
   if not weatherdata:
     return False, False
+
+  if verbose:
+    print "offset",offset
 
   ret = "" #all output goes here
   graph=dict()
@@ -50,7 +53,7 @@ def get_pyyrascii (location):
   temphigh = -99
   templow = 99
   tempstep = -1
-  hourcount = 22
+  hourcount = 22 + offset
   screenwidth = 80
   #rain in graph:
   rainheight = 10
@@ -59,7 +62,7 @@ def get_pyyrascii (location):
   wind = wind_symbols()
 
   #collect temps, rain from xml
-  for item in weatherdata['tabular'][:hourcount]:
+  for item in weatherdata['tabular'][offset:hourcount]:
     if int(item['temperature']) > temphigh:
       temphigh = int(item['temperature'])
       #print "h" + item['temperature']
@@ -136,7 +139,7 @@ def get_pyyrascii (location):
   #draw graph elements:
   time=[]
   #for each x (time)
-  for item in weatherdata['tabular'][:hourcount]:
+  for item in weatherdata['tabular'][offset:hourcount]:
     rain = math.ceil(float(item['precipitation']))
     try:
       rainmax = math.ceil(float(item['precipitationmax']))
@@ -267,7 +270,7 @@ def get_pyyrascii (location):
   return ret, source
 
 
-def get_pyyrshort (location):
+def get_pyyrshort (location, offset = 0):
   weatherdata, source = pyyrlib.returnWeatherData(location, True)
 
   if not weatherdata:
@@ -277,26 +280,26 @@ def get_pyyrshort (location):
 
   if verbose:
     print "weather"
-    print weatherdata['tabular'][0]
-    print weatherdata['tabular'][0]['temperature']
-    print weatherdata['tabular'][0]['precipitation']
-    print weatherdata['tabular'][0]['windSpeed']['mps']
-    print weatherdata['tabular'][0]['windDirection']['code']
+    print weatherdata['tabular'][offset]
+    print weatherdata['tabular'][offset]['temperature']
+    print weatherdata['tabular'][offset]['precipitation']
+    print weatherdata['tabular'][offset]['windSpeed']['mps']
+    print weatherdata['tabular'][offset]['windDirection']['code']
 
   ret += '%(location)s at %(from)s: %(temp)s C' % \
     {"location": location, 
-    "from": weatherdata['tabular'][0]['from'][11:16],
-    "temp": str(weatherdata['tabular'][0]['temperature'])
+    "from": weatherdata['tabular'][offset]['from'][11:16],
+    "temp": str(weatherdata['tabular'][offset]['temperature'])
     }
 
-  if 0 < float(weatherdata['tabular'][0]['precipitation']):
+  if 0 < float(weatherdata['tabular'][offset]['precipitation']):
     ret += ', %(precipitation)s mm rain' % \
-      {"precipitation": str(math.ceil(float(weatherdata['tabular'][0]['precipitation'])))}
+      {"precipitation": str(math.ceil(float(weatherdata['tabular'][offset]['precipitation'])))}
 
-  if 0 < float(weatherdata['tabular'][0]['windSpeed']['mps']):
+  if 0 < float(weatherdata['tabular'][offset]['windSpeed']['mps']):
     ret += ', %(speed)s mps wind from %(direction)s' % \
-      {"speed": str(weatherdata['tabular'][0]['windSpeed']['mps']),
-      "direction": weatherdata['tabular'][0]['windDirection']['code']}
+      {"speed": str(weatherdata['tabular'][offset]['windSpeed']['mps']),
+      "direction": weatherdata['tabular'][offset]['windDirection']['code']}
 
   ret += "."
 
