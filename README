@@ -67,6 +67,7 @@ TODO
 * BUG: o: doesn't show full location name
 * BUG: May be too tall for windows default window size.
 * BUG: Temperature sometimes runs of scale in not-hourly mode.
+* BUG: Uncertain-rain overwrites the out-of-scale value on top.
 * FEATURE: Make rainbars scale if value is off the chart.
 * FEATURE: Add arguments to get weather in different format:
 ** i:0458 to get an iconic view. ("Fullscreen" or small?)
