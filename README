@@ -71,7 +71,8 @@ TODO
 * FEATURE: Make rainbars scale if value is off the chart.
 * FEATURE: Add arguments to get weather in different format:
 ** i:0458 to get an iconic view. ("Fullscreen" or small?)
-** w:0458 to get graph for a week instead of a day.
+** 0458%3 to get every three hours instead of every hour. 
+** w90:0458 to set width of output
 * FEATURE: Include warnings (obsforecast). Example:
 <forecast>
 <text>

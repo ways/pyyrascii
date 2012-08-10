@@ -29,7 +29,7 @@ def wind_symbols():
     "W":" W", "WNW":"NW", "NW":"NW", "NNW":"NW"}
 
 
-def get_pyyrascii (location, offset = 0):
+def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
   weatherdata, source = pyyrlib.returnWeatherData(location, True)
 
   if not weatherdata:
@@ -37,6 +37,7 @@ def get_pyyrascii (location, offset = 0):
 
   if verbose:
     print "offset",offset
+    print "hourstep",hourstep
 
   ret = "" #all output goes here
   graph=dict()
@@ -54,7 +55,7 @@ def get_pyyrascii (location, offset = 0):
   templow = 99
   tempstep = -1
   hourcount = 22 + offset
-  screenwidth = 80
+  #screenwidth = 80
   #rain in graph:
   rainheight = 10
   rainstep = -1
@@ -140,6 +141,8 @@ def get_pyyrascii (location, offset = 0):
   time=[]
   #for each x (time)
   for item in weatherdata['tabular'][offset:hourcount]:
+
+
     rain = math.ceil(float(item['precipitation']))
     try:
       rainmax = math.ceil(float(item['precipitationmax']))
