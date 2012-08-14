@@ -10,7 +10,7 @@ PyYrAscii is a simple python grapher for using Yr.no’s weather data API.
 You are welcome to participate in this project!
 """
 
-__version__ = '20120727'
+__version__ = '20120814'
 __url__ = 'https://github.com/ways/pyyrascii'
 __license__ = 'GPL License'
 
@@ -140,9 +140,9 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
   #draw graph elements:
   time=[]
   #for each x (time)
-  for item in weatherdata['tabular'][offset:hourcount]:
-
-
+  #for item in weatherdata['tabular'][offset:hourcount]:
+  #for i, item in enumerate(weatherdata['tabular'], offset):
+  for item in weatherdata['tabular'][offset:hourcount:hourstep]:
     rain = math.ceil(float(item['precipitation']))
     try:
       rainmax = math.ceil(float(item['precipitationmax']))
