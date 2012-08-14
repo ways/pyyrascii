@@ -54,7 +54,8 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
   temphigh = -99
   templow = 99
   tempstep = -1
-  hourcount = 22 + offset
+  #hourcount = 22 + offset
+  hourcount = (screenwidth-14)/3 + offset
   #screenwidth = 80
   #rain in graph:
   rainheight = 10
