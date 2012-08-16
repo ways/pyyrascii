@@ -10,7 +10,7 @@ PyYrAscii is a simple python grapher for using Yr.no’s weather data API.
 You are welcome to participate in this project!
 """
 
-__version__ = '20120814'
+__version__ = '20120816'
 __url__ = 'https://github.com/ways/pyyrascii'
 __license__ = 'GPL License'
 
@@ -39,6 +39,10 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
     print "offset",offset
     print "hourstep",hourstep
 
+  offset = int(offset)
+  hourstep = int(hourstep)
+  screenwidth = int(screenwidth)
+
   ret = "" #all output goes here
   graph=dict()
   tempheight = 10+1
@@ -56,12 +60,14 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
   tempstep = -1
   #hourcount = 22 + offset
   hourcount = (screenwidth-14)/3 + offset
-  #screenwidth = 80
   #rain in graph:
   rainheight = 10
   rainstep = -1
   rainhigh = 0
   wind = wind_symbols()
+
+  if verbose:
+    print "hourcount", hourcount
 
   #collect temps, rain from xml
   for item in weatherdata['tabular'][offset:hourcount]:
@@ -274,11 +280,13 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
   return ret, source
 
 
-def get_pyyrshort (location, offset = 0):
+def get_pyyrshort (location, offset = 0, hourstep = 1, screenwidth = 80):
   weatherdata, source = pyyrlib.returnWeatherData(location, True)
 
   if not weatherdata:
     return False, False
+
+  offset = int(offset)
 
   ret = "" #all output goes here
 
