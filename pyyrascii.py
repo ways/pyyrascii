@@ -10,7 +10,7 @@ PyYrAscii is a simple python grapher for using Yr.no’s weather data API.
 You are welcome to participate in this project!
 """
 
-__version__ = '20120816'
+__version__ = '20120827'
 __url__ = 'https://github.com/ways/pyyrascii'
 __license__ = 'GPL License'
 
@@ -82,6 +82,14 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
     if math.ceil(float(item['precipitation'])) > rainhigh:
       rainhigh = math.ceil(float(item['precipitation']))
 
+    rainhighmax = 0
+    try:
+      rainhighmax = math.ceil(float(item['precipitationmax']))
+    except KeyError:
+        pass
+    if rainhighmax > rainhigh:
+      rainhigh = rainhighmax
+
   if verbose:
     print "high",temphigh,"low",templow,"rainhigh",rainhigh
 
@@ -135,8 +143,8 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
   #create rainaxis
   #TODO: make this scale
   rainaxis = []
-  for r in range(10, 0, rainstep):
-    if r <= rainhigh + 1:
+  for r in range(rainheight, 0, rainstep):
+    if r <= rainhigh: # + 1
       rainaxis.append('%2.0f mm ' % r)
     else:
       rainaxis.append(' ')
@@ -151,6 +159,7 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
   #for i, item in enumerate(weatherdata['tabular'], offset):
   for item in weatherdata['tabular'][offset:hourcount:hourstep]:
     rain = math.ceil(float(item['precipitation']))
+    rainmax = 0 #max rain for this hour
     try:
       if verbose:
         print "prec", rain
@@ -158,7 +167,7 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
       if verbose:
         print "precmax", rainmax
     except KeyError:
-      rainmax = 0 #max rain for this hour
+      pass
 
     #create rain on x axis
     #graph[rainline] += " " + '%2.0f' % rain
@@ -223,6 +232,8 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
         if 0 > int(item['temperature']): #rain but cold
           rainsymbol = "*"
 
+        if verbose:
+          print "rainmax: ", rainmax,"i",i,"rain",rain
         #if overflow, print number at top
         if rain > 10 and i == 1:
           rainsymbol = '%2.0f' % rain
@@ -230,15 +241,13 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
         else:
           #print rainmax if larger than rain.
           if rainmax > rain:
-            if verbose:
-              print "rainmax: ", rainmax,"i",i,"rain",rain
             try:
               graph[i-1] = graph[i-1][:-1] + "'"
             except UnboundLocalError:
               print "Err2: " + str(item['symbolnumber'])
             except KeyError:
               pass
-
+          
           #print rain
           try:
             graph[i] = graph[i][:-1] + rainsymbol
