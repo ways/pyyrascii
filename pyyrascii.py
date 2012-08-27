@@ -19,7 +19,7 @@ import pyyrlib # https://github.com/ways/pyyrlib
 import pyofc # https://github.com/ways/pyofflinefilecache
 
 verbose = False
-#verbose = True
+verbose = True
 
 def wind_symbols():
   return {
@@ -63,7 +63,7 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
   #rain in graph:
   rainheight = 10
   rainstep = -1
-  rainhigh = 0
+  rainhigh = 0 #highest rain on graph
   wind = wind_symbols()
 
   if verbose:
@@ -136,7 +136,7 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
   #TODO: make this scale
   rainaxis = []
   for r in range(10, 0, rainstep):
-    if r <= rainhigh +1:
+    if r <= rainhigh + 1:
       rainaxis.append('%2.0f mm ' % r)
     else:
       rainaxis.append(' ')
@@ -152,9 +152,13 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
   for item in weatherdata['tabular'][offset:hourcount:hourstep]:
     rain = math.ceil(float(item['precipitation']))
     try:
+      if verbose:
+        print "prec", rain
       rainmax = math.ceil(float(item['precipitationmax']))
+      if verbose:
+        print "precmax", rainmax
     except KeyError:
-      rainmax = 0
+      rainmax = 0 #max rain for this hour
 
     #create rain on x axis
     #graph[rainline] += " " + '%2.0f' % rain
@@ -224,13 +228,16 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
           rainsymbol = '%2.0f' % rain
           graph[i] = graph[i][:-2] + rainsymbol
         else:
-          #print rainmax if larger than rain. so far we only up by one. TODO
+          #print rainmax if larger than rain.
           if rainmax > rain:
-            #print "rainmax: ", rainmax,"i",i,"rain",rain
+            if verbose:
+              print "rainmax: ", rainmax,"i",i,"rain",rain
             try:
               graph[i-1] = graph[i-1][:-1] + "'"
             except UnboundLocalError:
               print "Err2: " + str(item['symbolnumber'])
+            except KeyError:
+              pass
 
           #print rain
           try:
