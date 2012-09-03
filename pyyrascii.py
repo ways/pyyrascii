@@ -19,7 +19,7 @@ import pyyrlib # https://github.com/ways/pyyrlib
 import pyofc # https://github.com/ways/pyofflinefilecache
 
 verbose = False
-verbose = True
+#verbose = True
 
 def wind_symbols():
   return {
