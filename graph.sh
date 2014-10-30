@@ -38,7 +38,9 @@ txtgry='\e[90m'
 
 #Local settings
 foreground=${txtwht}
+refresh=$(( 60*25 ))
 location="oslo~80"
+
 [ "" != "$1" ] && \
   location=$1
 
@@ -51,19 +53,47 @@ while :; do
   echo -e "${txtgry}"Updated at $( date); 
   #echo -e "${txtgrn}${cache}${txtrst}"
 
-  formatted=$( echo "$cache" | sed "s/-/\\${txtylw}☀\\${foreground}/g" )
-  formatted=$( echo "$formatted" | sed "s/\^^^/\\${txtblu} ☁ \\${foreground}/g" )
-  formatted=$( echo "$formatted" | sed "s/\ ^/\\${txtblu} ☁\\${foreground}/g" )
-  formatted=$( echo "$formatted" | sed "s/\===/\\${txtblu}☁☁☁\\${foreground}/g" )
-  formatted=$( echo "$formatted" | sed "s/\ = /\\${txtblu}☁☁ \\${foreground}/g" )
-  formatted=$( echo "$formatted" | sed "s/|/\\${txtblu}☔\\${foreground}/g" )
-  formatted=$( echo "$formatted" | sed "s/*/\\${txtblu}☸\\${foreground}/g" )
-  formatted=$( echo "$formatted" | sed "s/ !/\\${txtblu}☸☔\\${foreground}/g" )
-  formatted=$( echo "$formatted" | sed "s/=V=/\\${txtylw} ⚡⚡\\${foreground}/g" )
-  formatted=$( echo "$formatted" | sed "s/#/\\${txtblu}♒\\${foreground}/g" )
-  formatted=$( echo "$formatted" | sed "s/'C/\\${txtgry}℃ \\${foreground}/g" )
-  formatted=$( echo "$formatted" | sed "s/'/\\${txtblu}�\\${foreground}/g" )
-  echo -e "${formatted}"
+  # Symbols and titles
+  cache=$( echo "$cache" | sed "s/'C/\\${txtgry}℃ \\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/Hour/\\${txtgry}  ⌚\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/Wind(mps)/\\${txtgry}  ㎧\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/Wind dir./\\${txtgry}\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/ mm/\\${txtgry} ㎜\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/Rain (mm)/\\${txtgry}Rain (㎜)\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/- Sun/\\${txtylw}☀\\${foreground} Sun/g" )
 
-  sleep 3600; 
+  # Weather
+  cache=$( echo "$cache" | sed "s/=V=/\\${txtylw} ⚡⚡\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/---/\\${txtylw} ☀ \\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/--/\\${txtylw} ☀\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/\^^^/\\${txtblu} ☁ \\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/\^^/\\${txtblu} ☁\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/\ ^/\\${txtblu} ☁\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/\ = /\\${txtblu}☁☁ \\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/\===/\\${txtblu}☁☁☁\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/\==/\\${txtblu}☁☁\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/|/\\${txtcyn}☔\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/*/\\${txtwht}☸\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/ !/\\${txtwht}☸\\${txtcyn}☔\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/#/\\${txtpur}♒\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/'/\\${txtcyn}☂\\${foreground}/g" )
+
+  # Wind
+  cache=$( echo "$cache" | sed "s/NE/\\${txtblu} ↗\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/SE/\\${txtblu} ↘\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/NW/\\${txtblu} ↖\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/SW/\\${txtblu} ↙\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/ E /\\${txtblu} → \\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/ N /\\${txtblu} ↑ \\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/ S /\\${txtblu} ↓ \\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/ W /\\${txtblu} ← \\${foreground}/g" )
+
+  # Display night in hours
+  #TODO
+
+  echo -e "${cache}"
+  echo -e "${txtgry}Next update at "\
+    $( date --date="@$(( $( date +"%s" ) + ${refresh} ))" )
+
+  sleep ${refresh}; 
 done
