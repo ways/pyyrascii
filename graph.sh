@@ -48,9 +48,11 @@ location="oslo~80"
 while :; do
 
   echo -e "${txtwht}"* $( date)" Loading ..."; 
-  cache=$( echo "${location}"|nc graph.no finger |head -n19)
+  cache=$( echo "${location}"|nc graph.no finger )
   clear;
   echo -e "${txtgry}"Updated at $( date); 
+
+  # Show pure version
   #echo -e "${txtgrn}${cache}${txtrst}"
 
   # Symbols and titles
@@ -88,10 +90,25 @@ while :; do
   cache=$( echo "$cache" | sed "s/ S /\\${txtblu} ↓ \\${foreground}/g" )
   cache=$( echo "$cache" | sed "s/ W /\\${txtblu} ← \\${foreground}/g" )
 
-  # Display night in hours
-  #TODO
+  readarray -t cachearray <<<"${cache}"
+  for line in "${cachearray[@]}"; do
 
-  echo -e "${cache}"
+    # Display night in hours
+    if [ 1 -eq $( echo "${line}" | grep -c '⌚') ] ; then
+      echo -n "    "
+      readarray -t fields <<< ${line}
+      for field in ${fields[@]}; do
+        if [ 1 -eq $( echo "${field}" | grep -c '_') ] ; then
+          echo -en "${field} "| sed "s/_/\\ /g"
+        else
+          echo -en "${txtgry}${field} ${foreground}"
+        fi
+      done
+    else
+      echo -e "${line}"
+    fi
+  done
+
   echo -e "${txtgry}Next update at "\
     $( date --date="@$(( $( date +"%s" ) + ${refresh} ))" )
 
