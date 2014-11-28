@@ -58,7 +58,7 @@ while :; do
   # Symbols and titles
   cache=$( echo "$cache" | sed "s/'C/\\${txtgry}℃ \\${foreground}/g" )
   cache=$( echo "$cache" | sed "s/Hour/\\${txtgry}  ⌚\\${foreground}/g" )
-  cache=$( echo "$cache" | sed "s/Wind(mps)/\\${txtgry}  ㎧\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/Wind(mps)/\\${txtgry} ㎧\\${foreground}/g" )
   cache=$( echo "$cache" | sed "s/Wind dir./\\${txtgry}\\${foreground}/g" )
   cache=$( echo "$cache" | sed "s/ mm/\\${txtgry} ㎜\\${foreground}/g" )
   cache=$( echo "$cache" | sed "s/Rain (mm)/\\${txtgry}Rain (㎜)\\${foreground}/g" )
@@ -78,7 +78,7 @@ while :; do
   cache=$( echo "$cache" | sed "s/*/\\${txtwht}☸\\${foreground}/g" )
   cache=$( echo "$cache" | sed "s/ !/\\${txtwht}☸\\${txtcyn}☔\\${foreground}/g" )
   cache=$( echo "$cache" | sed "s/#/\\${txtpur}♒\\${foreground}/g" )
-  cache=$( echo "$cache" | sed "s/'/\\${txtcyn}☂\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/ '/\\${txtcyn} ☂\\${foreground}/g" )
 
   # Wind
   cache=$( echo "$cache" | sed "s/NE/\\${txtblu} ↗\\${foreground}/g" )
@@ -90,6 +90,9 @@ while :; do
   cache=$( echo "$cache" | sed "s/ S /\\${txtblu} ↓ \\${foreground}/g" )
   cache=$( echo "$cache" | sed "s/ W /\\${txtblu} ← \\${foreground}/g" )
 
+  # Make negative temperature blue
+  cache=$( echo "$cache" | sed -E "s/-[0-9]+/\\${txtcyn}&\\${foreground}/g" )
+
   readarray -t cachearray <<<"${cache}"
   for line in "${cachearray[@]}"; do
 
@@ -99,9 +102,22 @@ while :; do
       readarray -t fields <<< ${line}
       for field in ${fields[@]}; do
         if [ 1 -eq $( echo "${field}" | grep -c '_') ] ; then
-          echo -en "${field} "| sed "s/_/\\ /g"
+          echo -en "${field} "| sed "s/_/\\ /g "
         else
           echo -en "${txtgry}${field} ${foreground}"
+        fi
+      done
+
+    # Red on extreme winds
+    elif [ 1 -eq $( echo "${line}" | grep -c '㎧') ] ; then
+      re='^[0-9]+$'
+      echo -n "    "
+      readarray -t fields <<< ${line}
+      for field in ${fields[@]}; do
+        if [[ ${field} =~ $re ]] && [[ 9 -lt ${field} ]] ; then
+          echo -en "${txtred}$(printf "%2s" "${field}")${foreground} "
+        else
+          echo -en " ${field} "
         fi
       done
     else
