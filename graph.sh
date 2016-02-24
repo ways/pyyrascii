@@ -38,7 +38,7 @@ txtgry='\e[90m'
 
 #Local settings
 foreground=${txtwht}
-refresh=$(( 60*25 ))
+refresh=$(( 60*60 ))
 location="oslo~80"
 
 [ "" != "$1" ] && \
@@ -65,9 +65,10 @@ while :; do
   cache=$( echo "$cache" | sed "s/- Sun/\\${txtylw}☀\\${foreground} Sun/g" )
 
   # Weather
+  cache=$( echo "$cache" | sed "s/\=--/\\${txtblu}☁\\${txtylw}☀\\${foreground}/g" )
   cache=$( echo "$cache" | sed "s/=V=/\\${txtylw} ⚡⚡\\${foreground}/g" )
   cache=$( echo "$cache" | sed "s/---/\\${txtylw} ☀ \\${foreground}/g" )
-  cache=$( echo "$cache" | sed "s/--/\\${txtylw} ☀\\${foreground}/g" )
+  #cache=$( echo "$cache" | sed "s/--/\\${txtylw} ☀\\${foreground}/g" )
   cache=$( echo "$cache" | sed "s/\^^^/\\${txtblu} ☁ \\${foreground}/g" )
   cache=$( echo "$cache" | sed "s/\^^/\\${txtblu} ☁\\${foreground}/g" )
   cache=$( echo "$cache" | sed "s/\ ^/\\${txtblu} ☁\\${foreground}/g" )
@@ -78,7 +79,7 @@ while :; do
   cache=$( echo "$cache" | sed "s/*/\\${txtwht}☸\\${foreground}/g" )
   cache=$( echo "$cache" | sed "s/ !/\\${txtwht}☸\\${txtcyn}☔\\${foreground}/g" )
   cache=$( echo "$cache" | sed "s/#/\\${txtpur}♒\\${foreground}/g" )
-  cache=$( echo "$cache" | sed "s/ '/\\${txtcyn} ☂\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/'/\\${txtcyn}☂\\${foreground}/g" )
 
   # Wind
   cache=$( echo "$cache" | sed "s/NE/\\${txtblu} ↗\\${foreground}/g" )
