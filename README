@@ -89,6 +89,8 @@ TODO
 <body>
 <strong>Østlandet:</strong> Sørøstlig bris, kortvarig liten kuling i Ytre Oslofjord. Noen regnbyger. Fra i ettermiddag sørlig bris, sørvest frisk bris på kysten. Etter hvert skyet eller delvis skyet, stort sett oppholdsvær. I morgen sørlig bris. På kysten sørvest frisk bris som øker til liten kuling utpå dagen. Skiftende skydekke og enkelte regnbyger. Perioder med sol, særlig nær kysten.
 </body>
+* FEATURE: allow wind in kmh, mph.
+* FEATURE: allow temperature in F.
 
 * See https://github.com/ways/pyyrlib for TODOs in library.
 
