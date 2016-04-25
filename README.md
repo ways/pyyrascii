@@ -75,7 +75,6 @@ me a line at [finger@falk-petersen.no](mailto:finger@falk-petersen.no).
 * FEATURE: Include warnings (obsforecast). Example:
 ```
 <forecast>
-<<<<<<< HEAD:README
 <text>
 <location name="Oslo">
 <time from="2012-06-28" to="2012-06-29" type="obsforecast">
@@ -89,36 +88,15 @@ me a line at [finger@falk-petersen.no](mailto:finger@falk-petersen.no).
 <body>
 <strong>Østlandet:</strong> Sørøstlig bris, kortvarig liten kuling i Ytre Oslofjord. Noen regnbyger. Fra i ettermiddag sørlig bris, sørvest frisk bris på kysten. Etter hvert skyet eller delvis skyet, stort sett oppholdsvær. I morgen sørlig bris. På kysten sørvest frisk bris som øker til liten kuling utpå dagen. Skiftende skydekke og enkelte regnbyger. Perioder med sol, særlig nær kysten.
 </body>
-* FEATURE: allow wind in kmh, mph.
-* FEATURE: allow temperature in F.
-=======
-  <text>
-    <location name="Oslo">
-      <time from="2012-06-28" to="2012-06-29" type="obsforecast">
-        <title>Thursday and Friday</title>
-        <body>
-          <strong>Oslo:</strong> Fredag ettermiddag lokalt store nedbørsmengder.
-        </body>
-      </time>
-      <time from="2012-06-29" to="2012-06-30">
-        <title>Friday and Saturday</title>
-        <body>
-          <strong>Østlandet:</strong> Sørøstlig bris, kortvarig liten kuling
-          i Ytre Oslofjord. Noen regnbyger. Fra i ettermiddag sørlig bris,
-          sørvest frisk bris på kysten. Etter hvert skyet eller delvis skyet,
-          stort sett oppholdsvær. I morgen sørlig bris. På kysten sørvest
-          frisk bris som øker til liten kuling utpå dagen. Skiftende skydekke
-          og enkelte regnbyger. Perioder med sol, særlig nær kysten.
-        </body>
       </time>
     </location>
   </text>
 </forecast>
 ```
->>>>>>> 3a1906033a5ac0d46dcda808c1e1ab75835c79fe:README.md
 
 * See https://github.com/ways/pyyrlib for TODOs in library.
-
+* FEATURE: allow wind in kmh, mph.
+* FEATURE: allow temperature in F.
 
 ## Links and mentions
 
