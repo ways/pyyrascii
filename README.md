@@ -111,6 +111,7 @@ me a line at [finger@falk-petersen.no](mailto:finger@falk-petersen.no).
 * http://lifehacker.com/get-a-quick-weather-forecast-with-a-terminal-command-1760639048
 * http://ben.hamilton.id.au/how-to/get-the-weather-from-the-command-line
 * https://distrowatch.com/weekly.php?issue=20160404
+* http://osarena.net/meteorologikes-provlepseis-sto-termatiko-sas
 
 ## Similar projects
 
