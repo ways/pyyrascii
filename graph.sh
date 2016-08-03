@@ -65,8 +65,9 @@ while :; do
   cache=$( echo "$cache" | sed "s/- Sun/\\${txtylw}☀\\${foreground} Sun/g" )
 
   # Weather
-  cache=$( echo "$cache" | sed "s/\=--/\\${txtblu}☁\\${txtylw}☀\\${foreground}/g" )
   cache=$( echo "$cache" | sed "s/=V=/\\${txtylw} ⚡⚡\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/=V/\\${txtylw} ⚡\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/\=--/\\${txtblu}☁\\${txtylw}☀\\${foreground}/g" )
   cache=$( echo "$cache" | sed "s/---/\\${txtylw} ☀ \\${foreground}/g" )
   #cache=$( echo "$cache" | sed "s/--/\\${txtylw} ☀\\${foreground}/g" )
   cache=$( echo "$cache" | sed "s/\^^^/\\${txtblu} ☁ \\${foreground}/g" )
@@ -127,7 +128,7 @@ while :; do
   done
 
   echo -e "${txtgry}Next update at "\
-    $( date --date="@$(( $( date +"%s" ) + ${refresh} ))" )
+    $( date --date="@$(( $( date +"%s" ) + ${refresh} ))" )${txtrst}
 
   sleep ${refresh}; 
 done
