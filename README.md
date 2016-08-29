@@ -49,6 +49,32 @@ Weather forecast from yr.no, delivered by the Norwegian Meteorological Institute
 and the NRK. Try "finger @graph.no" for more info.
 ```
 
+For the U.S., thanks to a comment at http://osxdaily.com/2016/02/18/get-weather-command-line-finger-graph/:
+
+```
+finger oslo@graph.no | sed "s/'C/'F/" | sed 's/^ \?-\?[0-9]\+/{\0{/' | awk -F{ '{if($2 != "") printf "%3i%s\n", $2*1.8+32, $3; else print $1;}'
+
+                   -= Meteogram for norway/oslo/oslo/oslo =-                    
+ 'F                                                                   Rain (mm) 
+ 77                                                                   
+ 73                                                                   
+ 69                                                               --- 
+ 66                                                      ^^^=--=--    
+ 62                                                ^^^^^^             
+ 59---                                          ^^^                   
+ 55   =--^^^=--^^^^^^                     =--^^^                      
+ 51                  ^^^=--=--^^^      =--                            
+  9                              =-----                               
+  7                                                                   
+    20 21 22 23 00 01 02 03 04 05 06_07_08_09_10_11_12_13_14_15_16_17 Hour
+ 
+    SE SE SE SE SE SE SE SE NW NW NW NW NW SW SW SW SW SW SW SW SW SW Wind dir.
+     2  2  1  2  2  2  2  2  0  1  0  1  1  1  2  2  2  1  4  4  4  5 Wind(mps)
+
+Legend left axis:   - Sunny   ^ Scattered   = Clouded   =V= Thunder   # Fog
+Legend right axis:  | Rain    ! Sleet       * Snow
+```
+
 ## Thanks
 
 If you like the service, or want to report bugs, suggestions, etc, please drop
