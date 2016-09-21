@@ -314,7 +314,7 @@ def get_pyyrshort (location, offset = 0, hourstep = 1, screenwidth = 80):
     print weatherdata['tabular'][offset]['windSpeed']['mps']
     print weatherdata['tabular'][offset]['windDirection']['code']
 
-  ret += '%(location)s at %(from)s: %(temp)s C' % \
+  ret += str(source) + ' at %(from)s: %(temp)s C' % \
     {"location": location, 
     "from": weatherdata['tabular'][offset]['from'][11:16],
     "temp": str(weatherdata['tabular'][offset]['temperature'])
