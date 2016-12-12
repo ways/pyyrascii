@@ -21,7 +21,8 @@ import pyofc # https://github.com/ways/pyofflinefilecache
 verbose = False
 #verbose = True
 
-def wind_symbols():
+
+def wind_symbols ():
   return {
     "N":" N", "NNE":"NE", "NE":"NE", "ENE":"NE", \
     "E":" E", "ESE":"SE", "SE":"SE", "SSE":"SE", \
@@ -335,17 +336,18 @@ def get_pyyrshort (location, offset = 0, hourstep = 1, screenwidth = 80):
     print weatherdata['tabular'][offset]['windSpeed']['mps']
     print weatherdata['tabular'][offset]['windDirection']['code']
 
-  ret += '%(location)s at %(from)s: %(temp)s C' % \
+  ret += '%(location)s at %(from)s: %(temp)s C, %(symbolname)s' % \
     {"location": location, 
     "from": weatherdata['tabular'][offset]['from'][11:16],
-    "temp": str(weatherdata['tabular'][offset]['temperature'])
+    "temp": str(weatherdata['tabular'][offset]['temperature']),
+    "symbolname": str(weatherdata['tabular'][offset]['symbolname']).lower(),
     }
 
   if 0 < float(weatherdata['tabular'][offset]['precipitation']):
     precipitation = "rain"
     if 0 > float (weatherdata['tabular'][offset]['temperature']):
       precipitation = "snow"
-    ret += ', %(precipitation)s mm %(name)s' % \
+    ret += ' ( %(precipitation)s mm %(name)s )' % \
       {"precipitation": str(math.ceil(float(weatherdata['tabular'][offset]['precipitation']))),
       "name": precipitation}
 
@@ -354,7 +356,7 @@ def get_pyyrshort (location, offset = 0, hourstep = 1, screenwidth = 80):
       {"speed": str(weatherdata['tabular'][offset]['windSpeed']['mps']),
       "direction": weatherdata['tabular'][offset]['windDirection']['code']}
 
-  ret += "."
+  ret += '.'
 
   return ret, source
 
@@ -371,4 +373,5 @@ if __name__ == "__main__":
 
   ret, source = get_pyyrshort(location)
   print ret
+
   sys.exit(0)
