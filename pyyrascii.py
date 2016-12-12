@@ -10,11 +10,11 @@ PyYrAscii is a simple python grapher for using Yr.no’s weather data API.
 You are welcome to participate in this project!
 """
 
-__version__ = '20120827'
+__version__ = '20161212'
 __url__ = 'https://github.com/ways/pyyrascii'
 __license__ = 'GPL License'
 
-import SocketServer, subprocess, re, sys, string, math
+import SocketServer, subprocess, re, sys, string, math, random
 import pyyrlib # https://github.com/ways/pyyrlib
 import pyofc # https://github.com/ways/pyofflinefilecache
 
@@ -65,6 +65,8 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
   rainstep = -1
   rainhigh = 0 #highest rain on graph
   wind = wind_symbols()
+  sunrise = None
+  sunset = None
 
   if verbose:
     print "hourcount", hourcount
@@ -101,6 +103,14 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
 
   #scale rain-axis
   #TODO
+
+  #sunrise
+  if weatherdata['sunrise']:
+    sunrise = str(weatherdata['sunrise'])[11:13] #2014-11-21T08:28:42
+  if weatherdata['sunset']:
+    sunset = str(weatherdata['sunset'])[11:13] #2014-11-21T08:28:42
+    if verbose:
+      print 'sunrise' + sunrise + 'sunset' + sunset
 
   if temphigh == templow:
     templow = temphigh-1
@@ -177,8 +187,16 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
       if 0.0 != float(item['windSpeed']['mps']) else " O")
     #create wind strength on x axis
     graph[windstrline] += " " + '%2.0f' % float(item['windSpeed']['mps'])
+
     #create time on x axis
-    graph[timeline] += " " + str(item['from'])[11:13] #2012-01-17T21:00
+    spacer=' '
+    hour=str(item['from'])[11:13] #2012-01-17T21:00
+    if sunrise and sunset and \
+      int(sunrise) < int(hour) and \
+      int(sunset) > int(hour):
+      spacer='_'
+    graph[timeline] += spacer + hour
+
     #create time range
     time.append(str(item['from'])[11:13])
 
@@ -198,22 +216,27 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
 
         if tempingraph in temptomatch:
           #print temptomatch, graph[i][:3].strip()
-          if int(item['symbolnumber']) in [3,4]: #parly
+          if int(item['symbolnumber']) in [3,4]: #partly
             graph[i] += "^^^"
           elif int(item['symbolnumber']) in [5,7,8,9,10,12,13]: #clouded
             graph[i] += "==="
-          elif int(item['symbolnumber']) in [6,11,14,22]: #lightning
+          elif int(item['symbolnumber']) in [6,11,14,20,21,22,23]: #lightning
             graph[i] += "=V="
-          elif int(item['symbolnumber']) in [14,21]: #lightning and snow
-            graph[i] += "=<="
-          elif int(item['symbolnumber']) in [22]: #lightning and rain
-            graph[i] += "=<="
-          elif int(item['symbolnumber']) in [20,23]: #lightning and sleet
-            graph[i] += "=<!"
           elif int(item['symbolnumber']) == 15: #fog
             graph[i] += "###"
-          else: #clear 1,2
+          elif int(item['symbolnumber']) == 2: #light clouds
+            #if ' ' == spacer: #sundown
+            #  graph[i] += "=++"
+            #else:
+            graph[i] += "=--"
+          elif int(item['symbolnumber']) in [1]: #clear
+            #if ' ' == spacer: #sundown
+            #  graph[i] += "+++"
+            #else:
             graph[i] += "---"
+          else: #Shouldn't hit this
+            graph[i] += "???"
+          #print "symb", item['symbolnumber']
         else:
           graph[i] += "   "
       except KeyError as err:
@@ -288,10 +311,40 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
   for g in graph.values():
     ret += g + "\n"
 
+  #legend
   ret += "\nLegend left axis:   - Sunny   ^ Scattered   = Clouded   =V= Thunder   # Fog" +\
-         "\nLegend right axis:  | Rain    ! Sleet       * Snow       '  High uncertainty \n" +\
-    'Weather forecast from yr.no, delivered by the Norwegian Meteorological ' +\
-    'Institute and the NRK. Try "finger @graph.no" for more info.'
+         "\nLegend right axis:  | Rain    ! Sleet       * Snow\n"
+
+  appendix = list()
+  appendix.append('[Weather forecast from yr.no, delivered by the Norwegian Meteorological ' +\
+    'Institute and the NRK.]')
+  appendix.append('[Try finger @graph.no for more info.]')
+  appendix.append('[Mail a "thank you" to finger@falkp.no if you like the service.]')
+  #appendix.append('[Version ' + __version__ + ']')
+  appendix.append('[Project home: ' + __url__ + ']')
+  #appendix.append('[Hi mom!]')
+  #appendix.append('[Your ad here? (Forget it!)]')
+  appendix.append('[Blog at http://0p.no]')
+  #appendix.append('[Finger not available? Use echo oslo|nc graph.no finger]')
+  #appendix.append('[Thumbs up for open data.]')
+  #appendix.append('[Served to you by GNU/Linux.]')
+  #appendix.append('[Want to help? This service sucks for non-norwegian forecast.]')
+  appendix.append("[You can not use US zip codes here. Try finger @graph.no.]")
+  appendix.append('[The _ in front of hours means the sun is up.]')
+  #appendix.append('[This service now has a client, check out the github repo.]')
+  #appendix.append('[Ask me again, I dare you!]')
+  appendix.append('[Data is cached for 20 minutes, please dont hammer.]')
+  #appendix.append('[Sorry for the instability. Daily requests recently went up tenfold.]')
+  #appendix.append('[Data is cached for 20 minutes. No use in asking every second...]')
+  #appendix.append('[My bitcoin, flatter, patreon IDs are... Nah, keep your money.]')
+  #appendix.append('[Peace, love, linux.]')
+  #appendix.append('[Rate limited to survive twitter storm. Max 3 connections pr. 30 seconds.]')
+  appendix.append('[Pipe finger to head -n19 to remove this message.]')
+  appendix.append('[Hosted by copyleft.no]')
+  #appendix.append('[Source data has changed. Sunrise info missing for now.]')
+
+  # Add a random appendix
+  ret += appendix [ random.randint( 0, len(appendix)-1 ) ]
 
   return ret, source
 
@@ -321,8 +374,12 @@ def get_pyyrshort (location, offset = 0, hourstep = 1, screenwidth = 80):
     }
 
   if 0 < float(weatherdata['tabular'][offset]['precipitation']):
-    ret += ', %(precipitation)s mm rain' % \
-      {"precipitation": str(math.ceil(float(weatherdata['tabular'][offset]['precipitation'])))}
+    precipitation = "rain"
+    if 0 > float (weatherdata['tabular'][offset]['temperature']):
+      precipitation = "snow"
+    ret += ', %(precipitation)s mm %(name)s' % \
+      {"precipitation": str(math.ceil(float(weatherdata['tabular'][offset]['precipitation']))),
+      "name": precipitation}
 
   if 0 < float(weatherdata['tabular'][offset]['windSpeed']['mps']):
     ret += ', %(speed)s mps wind from %(direction)s' % \
@@ -342,5 +399,8 @@ if __name__ == "__main__":
     location = ''.join(sys.argv[1:])
 
   ret, source = get_pyyrascii(location)
+  print ret
+
+  ret, source = get_pyyrshort(location)
   print ret
   sys.exit(0)
