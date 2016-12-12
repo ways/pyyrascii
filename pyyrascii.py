@@ -52,14 +52,13 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
   rainline = 17
   graph[timeline] = "   " #time
   graph[timeline+1] = " " #spacer
-  #graph[rainline] = "   " #rain
   graph[windline] = "   " #wind
   graph[windstrline] = "   " #wind strenght
   temphigh = -99
   templow = 99
   tempstep = -1
-  #hourcount = 22 + offset
   hourcount = (screenwidth-14)/3 + offset
+
   #rain in graph:
   rainheight = 10
   rainstep = -1
@@ -75,11 +74,9 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
   for item in weatherdata['tabular'][offset:hourcount]:
     if int(item['temperature']) > temphigh:
       temphigh = int(item['temperature'])
-      #print "h" + item['temperature']
 
     if int(item['temperature']) < templow:
       templow = int(item['temperature'])
-      #print "l" + item['temperature']
 
     if math.ceil(float(item['precipitation'])) > rainhigh:
       rainhigh = math.ceil(float(item['precipitation']))
@@ -101,9 +98,6 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
     if verbose:
       print "Upped tempstep"
 
-  #scale rain-axis
-  #TODO
-
   #sunrise
   if weatherdata['sunrise']:
     sunrise = str(weatherdata['sunrise'])[11:13] #2014-11-21T08:28:42
@@ -124,31 +118,25 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
     print "temps",temps
 
   #extend temp range
-  #temps = [ (temps[0] +1) ] + temps
   for t in range(0, tempheight):
     if len(temps)+1 < tempheight:
       if t%2 == 0: #extend down
         temps.append( temps[len(temps)-1] - abs(tempstep) )
       else: #extend up
         temps = [ temps[0] + abs(tempstep) ] + temps
-  #temps.append( temps[len(temps)-1] -1 ) #TODO:remove me?
 
   if verbose:
     print "temps",temps
 
   #write temps to graph
   for i in range(1, tempheight):
-    #print i
     try:
       graph[i] = str(temps[i-1]).rjust(3, ' ')
     except KeyError as (errno, strerror):
       print "err ",i,errno,strerror
       pass
     except IndexError as err: #list empty
-      #print "err ",err
       pass
-
-  #print "graph",graph
 
   #create rainaxis
   #TODO: make this scale
@@ -164,9 +152,6 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
 
   #draw graph elements:
   time=[]
-  #for each x (time)
-  #for item in weatherdata['tabular'][offset:hourcount]:
-  #for i, item in enumerate(weatherdata['tabular'], offset):
   for item in weatherdata['tabular'][offset:hourcount:hourstep]:
     rain = math.ceil(float(item['precipitation']))
     rainmax = 0 #max rain for this hour
@@ -179,12 +164,11 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
     except KeyError:
       pass
 
-    #create rain on x axis
-    #graph[rainline] += " " + '%2.0f' % rain
     #create wind on x axis
     graph[windline] += " " + \
       (wind[ item['windDirection']['code'] ] \
       if 0.0 != float(item['windSpeed']['mps']) else " O")
+
     #create wind strength on x axis
     graph[windstrline] += " " + '%2.0f' % float(item['windSpeed']['mps'])
 
@@ -211,11 +195,7 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
         if tempstep < -1: #TODO: this should scale higher than one step
           temptomatch.append(temptomatch[0] - 1)
 
-        #print "temptomatch",temptomatch
-        #print "graph",tempingraph
-
         if tempingraph in temptomatch:
-          #print temptomatch, graph[i][:3].strip()
           if int(item['symbolnumber']) in [3,4]: #partly
             graph[i] += "^^^"
           elif int(item['symbolnumber']) in [5,7,8,9,10,12,13]: #clouded
@@ -225,18 +205,11 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
           elif int(item['symbolnumber']) == 15: #fog
             graph[i] += "###"
           elif int(item['symbolnumber']) == 2: #light clouds
-            #if ' ' == spacer: #sundown
-            #  graph[i] += "=++"
-            #else:
             graph[i] += "=--"
           elif int(item['symbolnumber']) in [1]: #clear
-            #if ' ' == spacer: #sundown
-            #  graph[i] += "+++"
-            #else:
             graph[i] += "---"
           else: #Shouldn't hit this
             graph[i] += "???"
-          #print "symb", item['symbolnumber']
         else:
           graph[i] += "   "
       except KeyError as err:
@@ -276,14 +249,9 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
             graph[i] = graph[i][:-1] + rainsymbol
           except UnboundLocalError:
             print "Err: " + str(item['symbolnumber'])
-        #print "Rain " + str(math.trunc(rain)) + " " + str(10-i)
-
-  #  print item
-  #  break
 
   #Legends
   graph[0] = " 'C" + string.rjust('Rain (mm) ', screenwidth-3)
-  #graph[rainline] +=   " Rain (mm)"
   graph[windline] +=    " Wind dir."
   graph[windstrline] += " Wind(mps)"
   graph[timeline] +=    " Hour"
