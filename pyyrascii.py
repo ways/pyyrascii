@@ -266,12 +266,7 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
   graph[timeline] +=    " Hour"
 
   #header
-  headline = "-= Meteogram for " +\
-    str(source)\
-    .replace('http://www.yr.no/sted/', '')\
-    .replace('http://www.yr.no/place/', '')\
-    .replace('/forecast.xml','')\
-    .replace('/forecast_hour_by_hour.xml','')
+  headline = "-= Meteogram for " + source_to_concise_string(source)
   if location.isdigit():
     headline += " for the next " + str(hourcount) + " hours"
   headline += " =-"
@@ -314,7 +309,10 @@ def get_pyyrshort (location, offset = 0, hourstep = 1, screenwidth = 80):
     print weatherdata['tabular'][offset]['windSpeed']['mps']
     print weatherdata['tabular'][offset]['windDirection']['code']
 
-  ret += str(source) + ' at %(from)s: %(temp)s C' % \
+  shortened_source = source_to_concise_string(source)
+
+  ret += shortened_source +\
+    ' at %(from)s: %(temp)s C' % \
     {"location": location, 
     "from": weatherdata['tabular'][offset]['from'][11:16],
     "temp": str(weatherdata['tabular'][offset]['temperature'])
@@ -333,6 +331,15 @@ def get_pyyrshort (location, offset = 0, hourstep = 1, screenwidth = 80):
 
   return ret, source
 
+def source_to_concise_string(source):
+  ret = ''
+  ret += str(source)\
+         .replace('http://www.yr.no/sted/', '')\
+         .replace('http://www.yr.no/place/', '')\
+         .replace('/forecast.xml','')\
+         .replace('/forecast_hour_by_hour.xml','')
+
+  return ret
 
 if __name__ == "__main__":
   # Test if location is provided
