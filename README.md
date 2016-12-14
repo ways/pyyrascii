@@ -80,6 +80,7 @@ Legend right axis:  | Rain    ! Sleet       * Snow
 If you like the service, or want to report bugs, suggestions, etc, please drop
 me a line at [finger@falk-petersen.no](mailto:finger@falk-petersen.no).
 
+Thanks to selbekk and karnival for pull requests.
 
 ## Requirements for installation (setting up your own service)
 
