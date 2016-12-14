@@ -334,7 +334,7 @@ def get_pyyrshort (location, offset = 0, hourstep = 1, screenwidth = 80):
   shortened_source = source_to_concise_string(source)
 
   ret += shortened_source + \
-    ' at %(from)s: %(temp)s C' % \
+    ' at %(from)s: %(temp)s C, %(symbolname)s' % \
     {"location": location, 
     "from": weatherdata['tabular'][offset]['from'][11:16],
     "temp": str(weatherdata['tabular'][offset]['temperature']),
