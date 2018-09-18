@@ -83,14 +83,14 @@ while :; do
   cache=$( echo "$cache" | sed "s/'/\\${txtcyn}☂\\${foreground}/g" )
 
   # Wind
-  cache=$( echo "$cache" | sed "s/NE/\\${txtblu} ↗\\${foreground}/g" )
-  cache=$( echo "$cache" | sed "s/SE/\\${txtblu} ↘\\${foreground}/g" )
-  cache=$( echo "$cache" | sed "s/NW/\\${txtblu} ↖\\${foreground}/g" )
-  cache=$( echo "$cache" | sed "s/SW/\\${txtblu} ↙\\${foreground}/g" )
-  cache=$( echo "$cache" | sed "s/ E /\\${txtblu} → \\${foreground}/g" )
-  cache=$( echo "$cache" | sed "s/ N /\\${txtblu} ↑ \\${foreground}/g" )
-  cache=$( echo "$cache" | sed "s/ S /\\${txtblu} ↓ \\${foreground}/g" )
-  cache=$( echo "$cache" | sed "s/ W /\\${txtblu} ← \\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/NE/\\${txtblu} ↙\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/SE/\\${txtblu} ↖\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/NW/\\${txtblu} ↘\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/SW/\\${txtblu} ↗\\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/ E /\\${txtblu} ← \\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/ N /\\${txtblu} ↓ \\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/ S /\\${txtblu} ↑ \\${foreground}/g" )
+  cache=$( echo "$cache" | sed "s/ W /\\${txtblu} → \\${foreground}/g" )
 
   # Make negative temperature blue
   cache=$( echo "$cache" | sed -E "s/-[0-9]+/\\${txtcyn}&\\${foreground}/g" )
