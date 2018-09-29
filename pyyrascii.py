@@ -14,7 +14,7 @@ __version__ = '20180929'
 __url__ = 'https://github.com/ways/pyyrascii'
 __license__ = 'GPL License'
 
-import socketserver, subprocess, re, sys, string, math, random
+import socketserver, sys, math, random
 import pyyrlib # https://github.com/ways/pyyrlib
 import pyofc # https://github.com/ways/pyofflinefilecache
 
