@@ -10,7 +10,7 @@ PyYrAscii is a simple python grapher for using Yr.no’s weather data API.
 You are welcome to participate in this project!
 """
 
-__version__ = '20161212'
+__version__ = '20180929'
 __url__ = 'https://github.com/ways/pyyrascii'
 __license__ = 'GPL License'
 
@@ -370,7 +370,7 @@ def source_to_concise_string(source):
 
 if __name__ == "__main__":
   # Test if location is provided
-  if sys.argv[1] == []:
+  if 2 > len(sys.argv):
     location = "0458"
   else:
     location = ''.join(sys.argv[1:])
