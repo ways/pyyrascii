@@ -20,7 +20,6 @@ import pyofc # https://github.com/ways/pyofflinefilecache
 
 verbose = False
 
-
 def wind_symbols ():
     return {
       "N":" N", "NNE":"NE", "NE":"NE", "ENE":"NE", \
@@ -28,22 +27,21 @@ def wind_symbols ():
       "S":" S", "SSW":"SW", "SW":"SW", "WSW":"SW", \
       "W":" W", "WNW":"NW", "NW":"NW", "NNW":"NW"}
 
+def c_to_f (c=0):
+    return int(c*9/5+32)
 
-def get_pyyrascii (location, offset = 5, hourstep = 1, screenwidth = 80,
+def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80,
     imperial = False):
     weatherdata, source = pyyrlib.returnWeatherData(location, True)
 
     if not weatherdata:
         return False, False
 
-    if verbose:
-        print("offset", offset)
-        print("hourstep", hourstep)
-
     offset = int(offset)
     hourstep = int(hourstep)
     screenwidth = int(screenwidth)
 
+    # Init graph
     ret = "" #all output goes here
     graph=dict()
     tempheight = 10+1
@@ -59,7 +57,7 @@ def get_pyyrascii (location, offset = 5, hourstep = 1, screenwidth = 80,
     tempstep = -1
     hourcount = int((screenwidth-14)/3 + offset)
 
-    #rain in graph:
+    # Rain in graph:
     rainheight = 10
     rainstep = -1
     rainhigh = 0 #highest rain on graph
@@ -68,12 +66,12 @@ def get_pyyrascii (location, offset = 5, hourstep = 1, screenwidth = 80,
     sunset = None
 
     if verbose:
-        print("hourcount", hourcount)
+        print("offset %s, hourstep %s, hourcount %s" % (offset, hourstep, hourcount))
 
     # Convert to imperial if needed:
     if imperial:
         for tid in range(len(weatherdata['tabular'][offset:hourcount])):
-            weatherdata['tabular'][tid]['temperature'] = int(weatherdata['tabular'][tid]['temperature'])*9/5+32
+            weatherdata['tabular'][tid]['temperature'] = c_to_f(int(weatherdata['tabular'][tid]['temperature']))
 
     #collect temps, rain from xml
     for item in weatherdata['tabular'][offset:hourcount]:
@@ -114,8 +112,8 @@ def get_pyyrascii (location, offset = 5, hourstep = 1, screenwidth = 80,
     if temphigh == templow:
         templow = temphigh-1
 
-    temps=[]
     #create temp range
+    temps=[]
     for t in range(int(temphigh), int(templow)-1, tempstep):
         temps.append(t)
 
@@ -281,9 +279,6 @@ def get_pyyrascii (location, offset = 5, hourstep = 1, screenwidth = 80,
         except IndexError:
             pass
 
-    #print graph
-    #for g in list(graph.values()):
-    #    ret += g + "\n"
     for k in sorted(graph.keys()):
         ret += graph[k] + "\n"
 
@@ -391,8 +386,5 @@ if __name__ == "__main__":
     ret, source = get_pyyrascii(location)
     print(ret)
     
-
     #ret, source = get_pyyrshort(location)
     #print(ret)
-
-    #sys.exit(0)
