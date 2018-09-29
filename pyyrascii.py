@@ -30,15 +30,16 @@ def wind_symbols ():
       "W":" W", "WNW":"NW", "NW":"NW", "NNW":"NW"}
 
 
-def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
+def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80,
+    imperial = False):
     weatherdata, source = pyyrlib.returnWeatherData(location, True)
 
     if not weatherdata:
         return False, False
 
     if verbose:
-        print("offset",offset)
-        print("hourstep",hourstep)
+        print("offset", offset)
+        print("hourstep", hourstep)
 
     offset = int(offset)
     hourstep = int(hourstep)
@@ -70,6 +71,11 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
 
     if verbose:
         print("hourcount", hourcount)
+
+    # Convert to imperial if needed:
+    if imperial:
+        for tid in range(len(weatherdata['tabular'][offset:hourcount])):
+            weatherdata['tabular'][tid]['temperature'] = int(weatherdata['tabular'][tid]['temperature'])*9/5+32
 
     #collect temps, rain from xml
     for item in weatherdata['tabular'][offset:hourcount]:
@@ -158,8 +164,8 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
         rain = math.ceil(float(item['precipitation']))
         rainmax = 0 #max rain for this hour
         try:
-            if verbose:
-                print("prec", rain)
+            #if verbose:
+            #    print("prec", rain)
             rainmax = math.ceil(float(item['precipitationmax']))
             if verbose:
                 print("precmax", rainmax)
@@ -254,6 +260,8 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
 
     #Legends
     graph[0] = " 'C" + str.rjust('Rain (mm) ', screenwidth-3)
+    if imperial:
+        graph[0] = " 'F" + str.rjust('Rain', screenwidth-9)
     graph[windline] +=    " Wind dir."
     graph[windstrline] += " Wind(mps)"
     graph[timeline] +=    " Hour"
@@ -304,10 +312,11 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
     #appendix.append('[My bitcoin, flatter, patreon IDs are... Nah, keep your money.]')
     #appendix.append('[Peace, love, linux.]')
     #appendix.append('[Rate limited to survive twitter storm. Max 3 connections pr. 30 seconds.]')
-    appendix.append('[Pipe finger to head -n19 to remove this message.]')
-    appendix.append('[Hosted by copyleft.no]')
+    #appendix.append('[Pipe finger to head -n19 to remove this message.]')
     #appendix.append('[Source data has changed. Sunrise info missing for now.]')
-
+    #appendix.append('[Vote: Add "feels like" temperature as default or option?]')
+    #appendix.append('[NEW: Now supports imperial units. See finger @graph.no.]')
+    
     # Add a random appendix
     ret += appendix [ random.randint( 0, len(appendix)-1 ) ]
 
