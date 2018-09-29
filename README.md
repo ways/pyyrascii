@@ -1,10 +1,13 @@
-# About
+# PyYrASCII
+
+## About
 
 An ASCII version of http://www.yr.no/sted/Norge/Oslo/Oslo/Oslo/time_for_time.html. Created to be run by a finger server.
 
 ## Usage
 
 The service can be used in the following ways:
+
 * `finger oslo@graph.no` - norwegian city name
 * `finger 0458@graph.no` - norwegian postal code
 * `finger newyork@graph.no` - international city name. These are not hourly. Only data for every 6 hours available.
@@ -18,13 +21,12 @@ The service can be used in the following ways:
 
 * Finger is supported on all major platforms (Windows, OS X, Linux, FreeBSD, Android, ...). Open up your terminal (or cmd.exe on Windows).
 * If you don't have finger available, but have some standard shell tools, try one of the following:
-    * `echo oslo|nc graph.no 79`
-    * `telnet graph.no 79` (and then type oslo)
-
+  * `echo oslo|nc graph.no 79`
+  * `telnet graph.no 79` (and then type oslo)
 
 ## Example
 
-```
+```bash
 $ finger oslo@graph.no
                    -= Meteogram for norway/oslo/oslo/oslo =-                    
  'C                                                                   Rain (mm)
@@ -51,11 +53,11 @@ and the NRK. Try "finger @graph.no" for more info.
 
 For the U.S., thanks to a comment at http://osxdaily.com/2016/02/18/get-weather-command-line-finger-graph/:
 
-```
+```bash
 finger oslo@graph.no | sed "s/'C/'F/" | sed 's/^ \?-\?[0-9]\+/{\0{/' | awk -F{ '{if($2 != "") printf "%3i%s\n", $2*1.8+32, $3; else print $1;}'
 
-                   -= Meteogram for norway/oslo/oslo/oslo =-                    
- 'F                                                                   Rain (mm) 
+                   -= Meteogram for norway/oslo/oslo/oslo =-
+ 'F                                                                   Rain (mm)
  77                                                                   
  73                                                                   
  69                                                               --- 
@@ -67,7 +69,7 @@ finger oslo@graph.no | sed "s/'C/'F/" | sed 's/^ \?-\?[0-9]\+/{\0{/' | awk -F{ '
   9                              =-----                               
   7                                                                   
     20 21 22 23 00 01 02 03 04 05 06_07_08_09_10_11_12_13_14_15_16_17 Hour
- 
+
     SE SE SE SE SE SE SE SE NW NW NW NW NW SW SW SW SW SW SW SW SW SW Wind dir.
      2  2  1  2  2  2  2  2  0  1  0  1  1  1  2  2  2  1  4  4  4  5 Wind(mps)
 
@@ -88,7 +90,6 @@ Thanks to selbekk and karnival for pull requests.
 * Please checkout https://github.com/ways/pyofflinefilecache to project directory.
 * debian packages: `python-mysqldb`
 
-
 ## TODO
 
 * BUG: o: doesn't show full location name
@@ -96,11 +97,12 @@ Thanks to selbekk and karnival for pull requests.
 * BUG: Temperature sometimes runs of scale in not-hourly mode.
 * BUG: Uncertain-rain overwrites the out-of-scale value on top.
 * FEATURE: Add arguments to get weather in different format:
-** i:0458 to get an iconic view. ("Fullscreen" or small?)
+  * i:0458 to get an iconic view. ("Fullscreen" or small?)
 * IMPROVEMENT: improve 0458%3
 * IMPROVEMENT: add text to o: ( "cloudy", "thunder", etc).
 * FEATURE: Include warnings (obsforecast). Example:
-```
+
+```xml
 <forecast>
 <text>
 <location name="Oslo">
