@@ -19,7 +19,6 @@ import pyyrlib # https://github.com/ways/pyyrlib
 import pyofc # https://github.com/ways/pyofflinefilecache
 
 verbose = False
-verbose = True
 
 
 def wind_symbols ():
@@ -281,8 +280,10 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80,
             pass
 
     #print graph
-    for g in list(graph.values()):
-        ret += g + "\n"
+    #for g in list(graph.values()):
+    #    ret += g + "\n"
+    for k in sorted(graph.keys()):
+        ret += graph[k] + "\n"
 
     #legend
     ret += "\nLegend left axis:   - Sunny   ^ Scattered   = Clouded   =V= Thunder   # Fog" +\
@@ -387,6 +388,7 @@ if __name__ == "__main__":
 
     ret, source = get_pyyrascii(location)
     print(ret)
+    
 
     #ret, source = get_pyyrshort(location)
     #print(ret)
