@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -14,12 +14,12 @@ __version__ = '20180929'
 __url__ = 'https://github.com/ways/pyyrascii'
 __license__ = 'GPL License'
 
-import SocketServer, subprocess, re, sys, string, math, random
+import socketserver, subprocess, re, sys, string, math, random
 import pyyrlib # https://github.com/ways/pyyrlib
 import pyofc # https://github.com/ways/pyofflinefilecache
 
 verbose = False
-#verbose = True
+verbose = True
 
 
 def wind_symbols ():
@@ -37,8 +37,8 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
     return False, False
 
   if verbose:
-    print "offset",offset
-    print "hourstep",hourstep
+    print("offset",offset)
+    print("hourstep",hourstep)
 
   offset = int(offset)
   hourstep = int(hourstep)
@@ -50,7 +50,7 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
   timeline = 13
   windline = 15
   windstrline = 16
-  rainline = 17
+  #rainline = 17
   graph[timeline] = "   " #time
   graph[timeline+1] = " " #spacer
   graph[windline] = "   " #wind
@@ -58,7 +58,7 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
   temphigh = -99
   templow = 99
   tempstep = -1
-  hourcount = (screenwidth-14)/3 + offset
+  hourcount = int((screenwidth-14)/3 + offset)
 
   #rain in graph:
   rainheight = 10
@@ -69,7 +69,7 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
   sunset = None
 
   if verbose:
-    print "hourcount", hourcount
+    print("hourcount", hourcount)
 
   #collect temps, rain from xml
   for item in weatherdata['tabular'][offset:hourcount]:
@@ -91,13 +91,13 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
       rainhigh = rainhighmax
 
   if verbose:
-    print "high",temphigh,"low",templow,"rainhigh",rainhigh
+    print("high",temphigh,"low",templow,"rainhigh",rainhigh)
 
   #scale y-axis. default = -1
   if tempheight <= (temphigh - templow):
     tempstep = -2
     if verbose:
-      print "Upped tempstep"
+      print("Upped tempstep")
 
   #sunrise
   if weatherdata['sunrise']:
@@ -105,7 +105,7 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
   if weatherdata['sunset']:
     sunset = str(weatherdata['sunset'])[11:13] #2014-11-21T08:28:42
     if verbose:
-      print 'sunrise' + sunrise + 'sunset' + sunset
+      print('sunrise' + sunrise + 'sunset' + sunset)
 
   if temphigh == templow:
     templow = temphigh-1
@@ -116,7 +116,7 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
     temps.append(t)
 
   if verbose:
-    print "temps",temps
+    print("temps",temps)
 
   #extend temp range
   for t in range(0, tempheight):
@@ -127,16 +127,17 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
         temps = [ temps[0] + abs(tempstep) ] + temps
 
   if verbose:
-    print "temps",temps
+    print("temps",temps)
 
   #write temps to graph
   for i in range(1, tempheight):
     try:
       graph[i] = str(temps[i-1]).rjust(3, ' ')
-    except KeyError as (errno, strerror):
-      print "err ",i,errno,strerror
-      pass
-    except IndexError as err: #list empty
+    #except KeyError as xxx_todo_changeme:
+    #  (errno, strerror) = xxx_todo_changeme.args
+    #  print("err ",i,errno,strerror)
+    #  pass
+    except IndexError: #list empty
       pass
 
   #create rainaxis
@@ -149,7 +150,7 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
       rainaxis.append(' ')
 
   if verbose:
-    print "rain axis",str(rainaxis)
+    print("rain axis",str(rainaxis))
 
   #draw graph elements:
   time=[]
@@ -158,10 +159,10 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
     rainmax = 0 #max rain for this hour
     try:
       if verbose:
-        print "prec", rain
+        print("prec", rain)
       rainmax = math.ceil(float(item['precipitationmax']))
       if verbose:
-        print "precmax", rainmax
+        print("precmax", rainmax)
     except KeyError:
       pass
 
@@ -213,7 +214,7 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
             graph[i] += "???"
         else:
           graph[i] += "   "
-      except KeyError as err:
+      except KeyError:
         continue
 
       #compare rain, and print
@@ -230,7 +231,7 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
           rainsymbol = "*"
 
         if verbose:
-          print "rainmax: ", rainmax,"i",i,"rain",rain
+          print("rainmax: ", rainmax,"i",i,"rain",rain)
         #if overflow, print number at top
         if rain > 10 and i == 1:
           rainsymbol = '%2.0f' % rain
@@ -241,7 +242,7 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
             try:
               graph[i-1] = graph[i-1][:-1] + "'"
             except UnboundLocalError:
-              print "Err2: " + str(item['symbolnumber'])
+              print("Err2: " + str(item['symbolnumber']))
             except KeyError:
               pass
           
@@ -249,10 +250,10 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
           try:
             graph[i] = graph[i][:-1] + rainsymbol
           except UnboundLocalError:
-            print "Err: " + str(item['symbolnumber'])
+            print("Err: " + str(item['symbolnumber']))
 
   #Legends
-  graph[0] = " 'C" + string.rjust('Rain (mm) ', screenwidth-3)
+  graph[0] = " 'C" + str.rjust('Rain (mm) ', screenwidth-3)
   graph[windline] +=    " Wind dir."
   graph[windstrline] += " Wind(mps)"
   graph[timeline] +=    " Hour"
@@ -262,7 +263,7 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
   if location.isdigit():
     headline += " for the next " + str(hourcount) + " hours"
   headline += " =-"
-  ret += string.center(headline, screenwidth) + "\n"
+  ret += str.center(headline, screenwidth) + "\n"
 
   #add rain to graph
   for i in range(1, tempheight):
@@ -272,7 +273,7 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80):
       pass
 
   #print graph
-  for g in graph.values():
+  for g in list(graph.values()):
     ret += g + "\n"
 
   #legend
@@ -324,12 +325,12 @@ def get_pyyrshort (location, offset = 0, hourstep = 1, screenwidth = 80):
   ret = "" #all output goes here
 
   if verbose:
-    print "weather"
-    print weatherdata['tabular'][offset]
-    print weatherdata['tabular'][offset]['temperature']
-    print weatherdata['tabular'][offset]['precipitation']
-    print weatherdata['tabular'][offset]['windSpeed']['mps']
-    print weatherdata['tabular'][offset]['windDirection']['code']
+    print("weather")
+    print(weatherdata['tabular'][offset])
+    print(weatherdata['tabular'][offset]['temperature'])
+    print(weatherdata['tabular'][offset]['precipitation'])
+    print(weatherdata['tabular'][offset]['windSpeed']['mps'])
+    print(weatherdata['tabular'][offset]['windDirection']['code'])
 
   shortened_source = source_to_concise_string(source)
 
@@ -376,9 +377,9 @@ if __name__ == "__main__":
     location = ''.join(sys.argv[1:])
 
   ret, source = get_pyyrascii(location)
-  print ret
+  print(ret)
 
-  ret, source = get_pyyrshort(location)
-  print ret
+  #ret, source = get_pyyrshort(location)
+  #print(ret)
 
-  sys.exit(0)
+  #sys.exit(0)
