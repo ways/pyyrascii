@@ -29,7 +29,7 @@ def wind_symbols ():
       "W":" W", "WNW":"NW", "NW":"NW", "NNW":"NW"}
 
 
-def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80,
+def get_pyyrascii (location, offset = 5, hourstep = 1, screenwidth = 80,
     imperial = False):
     weatherdata, source = pyyrlib.returnWeatherData(location, True)
 
@@ -50,9 +50,8 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80,
     timeline = 13
     windline = 15
     windstrline = 16
-    #rainline = 17
     graph[timeline] = "   " #time
-    graph[timeline+1] = " " #spacer
+    graph[timeline+1] = "    " #date line
     graph[windline] = "   " #wind
     graph[windstrline] = "   " #wind strenght
     temphigh = -99
@@ -138,10 +137,6 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80,
     for i in range(1, tempheight):
         try:
             graph[i] = str(temps[i-1]).rjust(3, ' ')
-        #except KeyError as xxx_todo_changeme:
-        #  (errno, strerror) = xxx_todo_changeme.args
-        #  print("err ",i,errno,strerror)
-        #  pass
         except IndexError: #list empty
             pass
 
@@ -160,27 +155,27 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80,
     #draw graph elements:
     time=[]
     for item in weatherdata['tabular'][offset:hourcount:hourstep]:
+        # Rain
         rain = math.ceil(float(item['precipitation']))
         rainmax = 0 #max rain for this hour
         try:
-            #if verbose:
-            #    print("prec", rain)
             rainmax = math.ceil(float(item['precipitationmax']))
             if verbose:
                 print("precmax", rainmax)
         except KeyError:
             pass
 
-        #create wind on x axis
+        # Wind on x axis
         graph[windline] += " " + \
           (wind[ item['windDirection']['code'] ] \
           if 0.0 != float(item['windSpeed']['mps']) else " O")
 
-        #create wind strength on x axis
+        # Wind strength on x axis
         graph[windstrline] += " " + '%2.0f' % float(item['windSpeed']['mps'])
 
-        #create time on x axis
+        # Time on x axis
         spacer=' '
+        date=str(item['from'])[0:10]
         hour=str(item['from'])[11:13] #2012-01-17T21:00
         if sunrise and sunset and \
           int(sunrise) < int(hour) and \
@@ -188,8 +183,15 @@ def get_pyyrascii (location, offset = 0, hourstep = 1, screenwidth = 80,
             spacer='_'
         graph[timeline] += spacer + hour
 
-        #create time range
+        # Create time range
         time.append(str(item['from'])[11:13])
+
+        # Date
+        if '00' == hour:
+            graph[timeline+1] += date
+        else:
+            graph[timeline+1] += '   '
+
 
         #for each y (temp) look for matching temp, draw graph
         for i in range(1, tempheight):
